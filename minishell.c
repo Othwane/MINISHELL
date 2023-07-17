@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/17 22:26:58 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/07/18 00:00:07 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	parcing(t_tokens *token, t_command **cmd)
 			add_files(&command->files, token->next->content, token->content);
 			token = token->next;
 		}
-		else if (is_redirections(token->content) == 0 
+		else if (is_redirections(token->content) == 0
 			|| ft_strcmp(token->content, "|") == 1)
 			add_args(&command->args, token->content);
 		token = token->next;
@@ -99,12 +99,16 @@ int main()
 			add_history(input);
 			super_split(&node_head ,input);
 			if (check_syntax_error(node_head) == 1)
+			{
 				printf("minishell~: syntax error near unexpected token2\n");
+				continue;
+			}
 			else
 			{
 				// get_envirement(node_head);
 				parcing(node_head, &command);
 			}
+			// exec();
 			print_command(command);
 			while(node_head)
 			{
