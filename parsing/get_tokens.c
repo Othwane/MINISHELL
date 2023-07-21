@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_tokens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 05:35:46 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/18 20:09:53 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/07/22 00:40:30 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,10 @@ void	super_split(t_tokens **my_list, char *str)
 {
 	char *token;
 	int i;
-	int w;
 	int s_len;
 	int	len;
 
 	i = 0;
-	w = 0;
 	len = ft_strlen(str);
 	while(i <= len)
 	{

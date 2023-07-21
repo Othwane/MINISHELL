@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   libft_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:54:03 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/20 18:40:39 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/07/22 00:40:58 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-size_t	ft_strlen(const char *s)
+int	ft_strlen(const char *s)
 {
 	int	i;
 
@@ -94,11 +94,9 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 char	*ft_strlcpy(char *dst, const char *src, int len)
 {
-	int	i;
 	int	j;
 
 	j = 0;
-	i = ft_strlen(src);
 	dst = malloc((len + 1) * sizeof(char));
 	while (j != len && src[j] != '\0')
 	{

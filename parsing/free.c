@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 22:34:27 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/20 01:24:11 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/07/22 00:49:30 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,20 @@
 void	print_command(t_command *my_list)
 {
 	t_command	*node_head;
-	t_args		*arg_head;
+	int			i;
 	t_files		*file_head;
 
+	i = 1;
 	node_head = my_list;
 	while(node_head)
 	{
-		printf("Command %s \n", node_head->command);
-		arg_head = node_head->args;
-		while(arg_head)
+		printf("Command %s \n", node_head->argv[0]);
+		while(node_head->argv[i])
 		{
-			printf("Args %s \n", arg_head->args);
-			arg_head = arg_head->next;
+			printf("Args %s \n", node_head->argv[i]);
+			i++;
 		}
+		i = 1;
 		file_head = node_head->files;
 		while(file_head)
 		{
@@ -43,7 +44,7 @@ void	print_command(t_command *my_list)
 void	print_list(t_tokens *my_list)
 {
 	t_tokens	*node_head;
-	
+
 	node_head = my_list;
 	while(node_head)
 	{
@@ -57,7 +58,7 @@ void	free_command(t_command *command)
 {
 	void		*tmp;
 	t_command	*cmd;
-	
+
 	while (command)
 	{
 		while (command->args)
@@ -77,7 +78,6 @@ void	free_command(t_command *command)
 		}
 		cmd = command;
 		command = command->next;
-		free(cmd->command);
 		free(cmd);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/20 11:07:10 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/07/22 00:40:44 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include <readline/readline.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define INPUT 1
 #define OUTPUT 2
@@ -39,6 +40,7 @@ typedef struct s_command
 	char				*command;
 	t_cmd_nmbr			*cmd_num;
 	t_args				*args;
+	char				**argv;
 	struct s_files		*files;
 	struct s_command	*next;
 }						t_command;
@@ -69,7 +71,7 @@ int						string_count(char *str);
 char					*ft_substr(char const *s, int start, int len);
 char					*ft_strdup(const char *s1);
 char					*ft_strlcpy(char *dst, const char *src, int len);
-size_t					ft_strlen(const char *s);
+int					ft_strlen(const char *s);
 int						check_syntax_error(t_tokens  *token);
 int						ft_strcmp(const char *s1, const char *s2);
 void					add_command(t_command **command, char *content);
