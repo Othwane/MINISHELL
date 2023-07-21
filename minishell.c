@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/18 00:00:07 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/07/20 07:16:28 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"minishell.h"
-
-int	is_redirections(char *token)
-{
-	if (ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0
-		|| ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") == 0)
-		return (1);
-	return (0);
-}
 
 t_files	*check_firts_token(t_tokens **token)
 {
@@ -63,7 +55,7 @@ void	parcing(t_tokens *token, t_command **cmd)
 			add_files(&command->files, token->next->content, token->content);
 			token = token->next;
 		}
-		else if (is_redirections(token->content) == 0
+		else if (is_redirections(token->content) == 0 
 			|| ft_strcmp(token->content, "|") == 1)
 			add_args(&command->args, token->content);
 		token = token->next;
@@ -77,47 +69,37 @@ void	parcing(t_tokens *token, t_command **cmd)
 	}
 }
 
-int main()
+int main(int ac, char **av, char **env)
 {
 	t_tokens	*node_head;
 	t_command	*command;
-	t_command	*tmp;
 	char		*input;
 
-	node_head = NULL;
 	while (1)
 	{
+		node_head = NULL;
 		command = malloc(sizeof(t_command));
 		command->cmd_num = malloc(sizeof(t_cmd_nmbr));
 		command->cmd_num->cmd_num = 0;
-		tmp = command;
 		input = readline("\033[31m~minishell$> \033[0m");
-		if (check_brakets(input))
-				printf("minishell~: syntax error near unexpected token1\n");
-		else if (ft_strlen(input) != 0)
+		if (ft_strlen(input) != 0)
 		{
 			add_history(input);
 			super_split(&node_head ,input);
-			if (check_syntax_error(node_head) == 1)
+			get_envirement(node_head, env);
+			if (check_syntax_error(node_head) == 1 || check_brakets(input) == 1)
+				printf("minishell~: syntax error near unexpected token\n");
+			else
+				parcing(node_head, &command);
+			if (command->cmd_num->cmd_num > 0)
 			{
-				printf("minishell~: syntax error near unexpected token2\n");
-				continue;
+				print_command(command);
+				free_command(command);
 			}
 			else
-			{
-				// get_envirement(node_head);
-				parcing(node_head, &command);
-			}
-			// exec();
-			print_command(command);
-			while(node_head)
-			{
-				free(node_head->content);
-				free(node_head);
-				node_head = node_head->next;
-			}
+				free(command);
+			free_tokens(node_head);
 		}
 		free(input);
 	}
-	return 0;
 }

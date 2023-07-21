@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/17 23:15:36 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/07/20 11:07:10 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ typedef struct s_args
 
 typedef struct cmd_nmbr
 {
-	int	cmd_num;
-}		t_cmd_nmbr;
+	int					cmd_num;
+}						t_cmd_nmbr;
 
 typedef struct s_command
 {
@@ -45,13 +45,17 @@ typedef struct s_command
 
 typedef struct s_files
 {
-	char			*filename;
-	// char* left_redir_file;
-	// char* right_redir_file;
-	char			*redairection;
-	int				red_type;
-	struct s_files	*next;
-}					t_files;
+	char				*filename;
+	char				*redairection;
+	int					red_type;
+	struct s_files		*next;
+}						t_files;
+
+typedef struct s_env
+{
+	char				*value;
+	struct s_env		*next;
+}   					t_env;
 
 typedef struct s_tokens
 {
@@ -64,6 +68,7 @@ void					super_split(t_tokens **my_list, char *str);
 int						string_count(char *str);
 char					*ft_substr(char const *s, int start, int len);
 char					*ft_strdup(const char *s1);
+char					*ft_strlcpy(char *dst, const char *src, int len);
 size_t					ft_strlen(const char *s);
 int						check_syntax_error(t_tokens  *token);
 int						ft_strcmp(const char *s1, const char *s2);
@@ -71,8 +76,14 @@ void					add_command(t_command **command, char *content);
 void					add_args(t_args **args, char *content);
 void					add_files(t_files **files, char *content, char *rdac);
 void					print_command(t_command *my_list);
-void					print_list(t_tokens *my_list);
 void					free_command(t_command *command);
-void					get_envirement(t_tokens *token);
+void					print_list(t_tokens *my_list);
+void					free_tokens(t_tokens *token);
+void					get_envirement(t_tokens *token, char **env);
+void					add_var(t_env **env, char *content);
+int						is_redirections(char *token);
+int						check_ifvalid(char c);
+int						special_strlen(char	*env);
+char					*search_and_replace(char *src, char *value);
 
 #endif

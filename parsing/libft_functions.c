@@ -6,17 +6,19 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:54:03 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/17 22:22:44 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/07/20 18:40:39 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 size_t	ft_strlen(const char *s)
 {
 	int	i;
 
 	i = 0;
+	if (!s)
+		return (i);
 	while (s[i] != '\0')
 	{
 		i++;
@@ -88,4 +90,21 @@ int	ft_strcmp(const char *s1, const char *s2)
 		x++;
 	}
 	return (0);
+}
+
+char	*ft_strlcpy(char *dst, const char *src, int len)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	i = ft_strlen(src);
+	dst = malloc((len + 1) * sizeof(char));
+	while (j != len && src[j] != '\0')
+	{
+		dst[j] = src[j];
+		j++;
+	}
+	dst[j] = '\0';
+	return (dst);
 }

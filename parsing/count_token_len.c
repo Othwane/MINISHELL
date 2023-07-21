@@ -6,11 +6,11 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:21:20 by aasselma          #+#    #+#             */
-/*   Updated: 2023/06/15 23:33:58 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/07/18 18:30:57 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	count__brkts(char *str, char c)
 {

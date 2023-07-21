@@ -6,11 +6,11 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 05:35:46 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/08 06:58:10 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/07/18 20:09:53 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	add_new(t_tokens **t_list, char *content)
 {

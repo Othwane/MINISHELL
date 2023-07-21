@@ -6,11 +6,11 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 18:33:04 by aasselma          #+#    #+#             */
-/*   Updated: 2023/06/17 10:09:13 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/07/18 18:30:38 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	check_brakets(char *str)
 {

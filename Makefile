@@ -6,18 +6,19 @@
 #    By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/11 05:43:13 by aasselma          #+#    #+#              #
-#    Updated: 2023/07/17 22:21:35 by aasselma         ###   ########.fr        #
+#    Updated: 2023/07/20 10:15:12 by aasselma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC =	errors.c minishell.c get_tokens.c count_token_len.c libft_functions.c \
-		handel_syntax_error.c get_command.c free.c get_variable.c
+SRC =	minishell.c ./parsing/errors.c ./parsing/get_tokens.c ./parsing/count_token_len.c \
+		./parsing/libft_functions.c ./parsing/handel_syntax_error.c ./parsing/get_command.c \
+		./parsing/free.c ./parsing/get_variable.c ./parsing/utils.c ./parsing/search_and_replace.c
 
 OBJ	= $(SRC:%.c=%.o)
 
-FLAGS = -Wall -Wextra -Werror -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 RM = rm -f
 

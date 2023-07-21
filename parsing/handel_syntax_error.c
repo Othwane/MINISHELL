@@ -6,11 +6,11 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 06:51:22 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/17 22:23:26 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/07/18 23:10:46 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	check_pipes(t_tokens *token)
 {

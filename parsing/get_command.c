@@ -6,11 +6,11 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 06:41:05 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/16 15:59:54 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/07/19 23:51:25 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	add_command(t_command **command, char *content)
 {
@@ -70,6 +70,25 @@ void	add_files(t_files **files, char *content, char *rdac)
 	{	
 		tmp = *files;
 		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = newnode;
+	}
+}
+
+void	add_var(t_env **env, char *content)
+{
+	t_env	*newnode;
+	t_env	*tmp;
+
+	newnode = malloc(sizeof(t_env));
+	newnode->value = ft_strdup(content);
+	newnode->next = NULL;
+	if (*env == NULL)
+		*env = newnode;
+	else
+	{
+		tmp = *env;
+		while(tmp->next)
 			tmp = tmp->next;
 		tmp->next = newnode;
 	}

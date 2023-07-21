@@ -6,14 +6,15 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:21:22 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/17 22:08:42 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/07/20 18:39:47 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-char	*get_var(char	*str, int f, int l)
+void	get_var(char *str, int f, int l, t_env **env)
 {
+	t_env	*emt;
 	char	*var;
 	int		len;
 	int		i;
@@ -29,23 +30,14 @@ char	*get_var(char	*str, int f, int l)
 		i++;
 	}
 	var[i] = '\0';
-	return (var);
+	if (ft_strlen(var) > 0)
+	{
+		add_var(env, var);
+		free(var);
+	}
 }
 
-int	check_ifvalid(char c)
-{
-	if ((c >= 65 && c <= 90))
-		return (1);
-	else if ((c >= 97 && c <= 122))
-		return (1);
-	else if (c >= '0' && c <= '9')
-		return (1);
-	else
-		return (0);
-	return (0);
-}
-
-char	*ft_search(char *s)
+void	ft_search(char *s, t_env **env)
 {
 	int		i;
 	int		start;	
@@ -62,56 +54,61 @@ char	*ft_search(char *s)
 		else if (s[i] == '$')
 		{
 			dollar_sign = '$';
-			start = (i + 1);
+			start = (++i);
 			while (check_ifvalid(s[i + 1]))
 				i++;
-			break ;
+			if ((quotes == 34 && dollar_sign == '$') || (dollar_sign == '$' && quotes == 0))
+				get_var(s, start, i, env);
 		}
 		i++;
 	}
-	if (quotes == 34 && dollar_sign == '$')
-		return (get_var(s, start, i));
-	return (NULL);
 }
 
-void	replace_value(char *token, char *var)
+char	*get_value(char **env, char *var)
 {
-	int	i;
-	int	j;
+	char	*var2;
+	int		i;
+	int		len;
 
-	while(token[i])
+	i = 0;
+	while(env[i])
 	{
-		if (token[i] == '$')
+		len = special_strlen(env[i]);
+		var2 = ft_strlcpy(var2, env[i], (len - 1));
+		if (ft_strcmp(var2, var) == 0)
 		{
-			while(check_ifvalid(token[i + 1]))
-				token[i++] = var[j++];
-			
-		}
-	}
-}
-
-void	get_envirement(t_tokens *token)
-{
-	char *variable;
-	
-	while (token)
-	{
-		printf("%s\n", token->content);
-		variable = ft_search(token->content);
-		if (variable != NULL)
-		{
-			printf("variable = [%s]\n", variable);
-			variable = getenv(variable);
-			printf("value	 = [%s]\n", variable);
-			// replace_value(token->content, variable);
-			exit(0);
+			free(var2);
+			var2 = ft_strlcpy(var2, env[i] + len, ft_strlen(env[i]));
+			break ;
 		}
 		else
 		{
-			printf("not found \n");
-			exit(0);
+			free(var2);
+			var2 = NULL;
+		}
+		i++;
+	}
+	free(var);
+	return(var2);
+}
+
+void	get_envirement(t_tokens *token, char **env)
+{
+	t_env *emt;
+
+	emt = NULL;
+	while (token)
+	{
+		ft_search(token->content, &emt);
+		while(emt)
+		{
+			if (emt->value[0] != '$')
+				emt->value = get_value(env, emt->value);
+			token->content = search_and_replace(token->content, emt->value);
+			free(emt->value);
+			free(emt);
+			emt = emt->next;
 		}
 		token = token->next;
 	}
-	printf("%s\n", variable);
 }
