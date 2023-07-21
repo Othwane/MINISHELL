@@ -6,7 +6,7 @@
 /*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 22:34:27 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/22 00:49:30 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/07/22 00:53:10 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,15 @@ void	free_command(t_command *command)
 {
 	void		*tmp;
 	t_command	*cmd;
+	int			i;
 
+	i = 0;
 	while (command)
 	{
-		while (command->args)
+		while (command->argv[i])
 		{
-			free(command->args->args);
-			tmp	= command->args;
-			command->args = command->args->next;
-			free(tmp);
+			free(command->argv[i]);
+			i++;
 		}
 		while (command->files)
 		{

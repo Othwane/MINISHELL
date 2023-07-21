@@ -6,7 +6,7 @@
 /*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/22 00:49:11 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/07/22 00:52:27 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	parcing(t_tokens *token, t_command **cmd)
 
 	command = *cmd;
 	command->files = NULL;
-	command->args = NULL;
 	command->files = check_firts_token(&token);
 	// add_command(&command, token->content);
 	// token = token->next;

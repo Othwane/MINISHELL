@@ -6,7 +6,7 @@
 /*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/22 00:40:44 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/07/22 00:53:32 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,6 @@
 #define OUTPUT 2
 #define HERDOCE 3
 
-typedef struct s_args
-{
-	char				*args;
-	struct s_args		*next;
-}						t_args;
-
 typedef struct cmd_nmbr
 {
 	int					cmd_num;
@@ -39,7 +33,6 @@ typedef struct s_command
 {
 	char				*command;
 	t_cmd_nmbr			*cmd_num;
-	t_args				*args;
 	char				**argv;
 	struct s_files		*files;
 	struct s_command	*next;
@@ -75,7 +68,6 @@ int					ft_strlen(const char *s);
 int						check_syntax_error(t_tokens  *token);
 int						ft_strcmp(const char *s1, const char *s2);
 void					add_command(t_command **command, char *content);
-void					add_args(t_args **args, char *content);
 void					add_files(t_files **files, char *content, char *rdac);
 void					print_command(t_command *my_list);
 void					free_command(t_command *command);

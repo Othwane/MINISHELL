@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 06:41:05 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/19 23:51:25 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/07/22 00:53:41 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,6 @@ void	add_command(t_command **command, char *content)
 	}
 }
 
-void	add_args(t_args **args, char *content)
-{
-	t_args	*newnode;
-	t_args	*tmp;
-
-	newnode = malloc(sizeof(t_args));
-	newnode->args = ft_strdup(content);
-	newnode->next = NULL;
-	if (*args == NULL)
-		*args = newnode;
-	else
-	{
-		tmp = *args;
-		while(tmp->next)
-			tmp = tmp->next;
-		tmp->next = newnode;
-	}
-}
-
 void	add_files(t_files **files, char *content, char *rdac)
 {
 	t_files	*newnode;
@@ -67,7 +48,7 @@ void	add_files(t_files **files, char *content, char *rdac)
 	if (*files == NULL)
 		*files = newnode;
 	else
-	{	
+	{
 		tmp = *files;
 		while (tmp->next)
 			tmp = tmp->next;
