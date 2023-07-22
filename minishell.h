@@ -6,7 +6,7 @@
 /*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/22 00:53:32 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/07/22 00:59:05 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,6 @@ int						is_redirections(char *token);
 int						check_ifvalid(char c);
 int						special_strlen(char	*env);
 char					*search_and_replace(char *src, char *value);
+void* ft_memcpy(void* src, int set, int size);
 
 #endif
