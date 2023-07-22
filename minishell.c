@@ -6,7 +6,7 @@
 /*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/22 01:05:00 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/07/22 01:30:31 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,6 @@ void	parcing(t_tokens *token, t_command **cmd)
 	t_command	*command;
 
 	command = *cmd;
-	command->files = NULL;
-	command->files = check_firts_token(&token);
-	// add_command(&command, token->content);
-	// token = token->next;
 	while(token)
 	{
 		if (ft_strcmp(token->content, "|") == 0)
@@ -73,7 +69,7 @@ void	parcing(t_tokens *token, t_command **cmd)
 		else if (is_redirections(token->content))
 		{
 			add_files(&command->files, token->next->content, token->content);
-			token = token->next;
+			token = token->next->next;
 		}
 		else
 		{
@@ -110,11 +106,14 @@ int main(int ac, char **av, char **env)
 			super_split(&node_head ,input);
 			get_envirement(node_head, env);
 			if (check_syntax_error(node_head) == 1 || check_brakets(input) == 1)
+			{
 				printf("minishell~: syntax error near unexpected token\n");
+				continue;
+			}
 			else
 			{
 				parcing(node_head, &command);
-				// _exec(command);
+				// _exec(command, env);
 			}
 			if (command)
 			{

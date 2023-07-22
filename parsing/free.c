@@ -6,7 +6,7 @@
 /*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 22:34:27 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/22 01:00:54 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/07/22 01:27:03 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,16 @@ void	print_command(t_command *my_list)
 	node_head = my_list;
 	while(node_head)
 	{
-		printf("Command %s \n", node_head->argv[0]);
-		while(node_head->argv[i])
+		if (node_head->argv)
 		{
-			printf("Args %s \n", node_head->argv[i]);
-			i++;
+			printf("Command %s \n", node_head->argv[0]);
+			while(node_head->argv[i])
+			{
+				printf("Args %s \n", node_head->argv[i]);
+				i++;
+			}
+			i = 1;
 		}
-		i = 1;
 		file_head = node_head->files;
 		while(file_head)
 		{
@@ -63,7 +66,7 @@ void	free_command(t_command *command)
 	i = 0;
 	while (command)
 	{
-		while (command->argv[i])
+		while (command->argv && command->argv[i])
 		{
 			free(command->argv[i]);
 			i++;

@@ -6,7 +6,7 @@
 #    By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/11 05:43:13 by aasselma          #+#    #+#              #
-#    Updated: 2023/07/22 00:40:05 by omajdoub         ###   ########.fr        #
+#    Updated: 2023/07/22 01:14:11 by omajdoub         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME = minishell
 
 SRC =	minishell.c ./parsing/errors.c ./parsing/get_tokens.c ./parsing/count_token_len.c \
 		./parsing/libft_functions.c ./parsing/handel_syntax_error.c ./parsing/get_command.c \
-		./parsing/free.c ./parsing/get_variable.c ./parsing/utils.c ./parsing/search_and_replace.c
+		./parsing/free.c ./parsing/get_variable.c ./parsing/utils.c ./parsing/search_and_replace.c \
+		execution/exec.c
 
 OBJ	= $(SRC:%.c=%.o)
 

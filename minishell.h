@@ -6,7 +6,7 @@
 /*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/22 01:04:08 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/07/22 01:21:59 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ typedef struct s_command
 	char				**argv;
 	struct s_files		*files;
 	struct s_command	*next;
+	int in;
+	int out;
 }						t_command;
 
 typedef struct s_files
@@ -73,5 +75,6 @@ int						check_ifvalid(char c);
 int						special_strlen(char	*env);
 char					*search_and_replace(char *src, char *value);
 void* ft_memset(void* src, int set, int size);
+void	_exec(t_command *command, char** env);
 
 #endif
