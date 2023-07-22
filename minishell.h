@@ -6,7 +6,7 @@
 /*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/22 00:59:05 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/07/22 01:04:08 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,8 @@
 #define OUTPUT 2
 #define HERDOCE 3
 
-typedef struct cmd_nmbr
-{
-	int					cmd_num;
-}						t_cmd_nmbr;
-
 typedef struct s_command
 {
-	char				*command;
-	t_cmd_nmbr			*cmd_num;
 	char				**argv;
 	struct s_files		*files;
 	struct s_command	*next;
@@ -79,6 +72,6 @@ int						is_redirections(char *token);
 int						check_ifvalid(char c);
 int						special_strlen(char	*env);
 char					*search_and_replace(char *src, char *value);
-void* ft_memcpy(void* src, int set, int size);
+void* ft_memset(void* src, int set, int size);
 
 #endif

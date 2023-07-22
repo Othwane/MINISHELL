@@ -6,29 +6,12 @@
 /*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 06:41:05 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/22 00:53:41 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/07/22 01:03:25 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	add_command(t_command **command, char *content)
-{
-	t_command	*cmd;
-
-	cmd = *command;
-	if (cmd->cmd_num->cmd_num == 0)
-	{
-		cmd->cmd_num->cmd_num++;
-		cmd->command = ft_strdup(content);
-		cmd->next = NULL;
-	}
-	else
-	{
-		cmd->command = ft_strdup(content);
-		cmd->next = NULL;
-	}
-}
 
 void	add_files(t_files **files, char *content, char *rdac)
 {

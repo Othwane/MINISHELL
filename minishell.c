@@ -6,7 +6,7 @@
 /*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/22 01:00:14 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/07/22 01:05:00 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,7 @@ void	parcing(t_tokens *token, t_command **cmd)
 	if (token)
 	{
 		command->next = malloc(sizeof(t_command));
-		command->next->cmd_num = malloc(sizeof(t_cmd_nmbr));
-		command->next->cmd_num->cmd_num = command->cmd_num->cmd_num;
-		command->next->next = NULL;
+		ft_memset(command->next, 0, sizeof(t_command));
 		parcing(token->next, &command->next);
 	}
 }
@@ -104,9 +102,7 @@ int main(int ac, char **av, char **env)
 	{
 		node_head = NULL;
 		command = malloc(sizeof(t_command));
-		command->cmd_num = malloc(sizeof(t_cmd_nmbr));
-		command->cmd_num->cmd_num = 0;
-		command->next = NULL;
+		ft_memset(command, 0, sizeof(t_command));
 		input = readline("\033[31m~minishell$> \033[0m");
 		if (ft_strlen(input) != 0)
 		{
