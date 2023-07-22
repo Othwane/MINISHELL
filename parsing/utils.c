@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 23:52:04 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/20 07:58:26 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/07/22 05:07:11 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,41 @@ int	special_strlen(char	*env)
 	while(env[i - 1] != '=')
 		i++;
 	return (i);
+}
+
+int calc_arr_len(char** arr)
+{
+	int sz = 0;
+	if (!arr)
+		return sz;
+	while (arr[sz])
+		sz++;
+	return sz;
+}
+
+void free_arr(char** arr)
+{
+	int i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+
+
+char** realloc_arr(char** arr, int new_sz)
+{
+	int arr_sz = calc_arr_len(arr);
+	int i = 0;
+	char** new_arr = malloc(sizeof(char*) * (arr_sz + new_sz + 1));
+	while (arr[i])
+	{
+		new_arr[i] = ft_strdup(arr[i]);
+		i++;
+	}
+	new_arr[i] = NULL;
+	free_arr(arr);
+	return new_arr;
 }

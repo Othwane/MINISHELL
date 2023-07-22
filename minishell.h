@@ -6,7 +6,7 @@
 /*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/22 01:21:59 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/07/22 04:53:02 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,7 @@ int						special_strlen(char	*env);
 char					*search_and_replace(char *src, char *value);
 void* ft_memset(void* src, int set, int size);
 void	_exec(t_command *command, char** env);
+char** realloc_arr(char** arr, int new_sz);
+int calc_arr_len(char** arr);
 
 #endif

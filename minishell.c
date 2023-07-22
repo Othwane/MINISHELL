@@ -6,7 +6,7 @@
 /*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/22 01:30:31 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/07/22 05:06:00 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,24 @@ t_files	*check_firts_token(t_tokens **token)
 	return (NULL);
 }
 
-char** concat_argv(t_tokens* token)
+char** concat_argv(t_command* cmd, t_tokens* token)
 {
 	int argv_len = 0;
 	t_tokens* tmp = token;
 	int i = 0;
+	char** ret;
 	while (tmp && !is_redirections(tmp->content) && ft_strcmp(tmp->content, "|"))
 	{
 		argv_len++;
 		tmp = tmp->next;
 	}
-	char** ret = malloc(sizeof(char*) * argv_len + 1);
+	if (!cmd->argv)
+		ret = malloc(sizeof(char*) * argv_len + 1);
+	else
+	{
+		ret = realloc_arr(cmd->argv, argv_len);
+		i = calc_arr_len(cmd->argv);
+	}
 	while (token && !is_redirections(token->content) && ft_strcmp(token->content, "|"))
 	{
 		ret[i] = ft_strdup(token->content);
@@ -73,7 +80,7 @@ void	parcing(t_tokens *token, t_command **cmd)
 		}
 		else
 		{
-			command->argv = concat_argv(token);
+			command->argv = concat_argv(command, token);
 			while (token && !is_redirections(token->content) && ft_strcmp(token->content, "|"))
 				token = token->next;
 		}
@@ -82,6 +89,7 @@ void	parcing(t_tokens *token, t_command **cmd)
 	{
 		command->next = malloc(sizeof(t_command));
 		ft_memset(command->next, 0, sizeof(t_command));
+		command->next->out = 1;
 		parcing(token->next, &command->next);
 	}
 }
@@ -99,6 +107,7 @@ int main(int ac, char **av, char **env)
 		node_head = NULL;
 		command = malloc(sizeof(t_command));
 		ft_memset(command, 0, sizeof(t_command));
+		command->out = 1;
 		input = readline("\033[31m~minishell$> \033[0m");
 		if (ft_strlen(input) != 0)
 		{
@@ -113,10 +122,10 @@ int main(int ac, char **av, char **env)
 			else
 			{
 				parcing(node_head, &command);
-				// _exec(command, env);
 			}
 			if (command)
 			{
+				// _exec(command, env);
 				print_command(command);
 				free_command(command);
 			}
