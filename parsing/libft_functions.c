@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   libft_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:54:03 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/22 01:04:16 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/07/20 18:40:39 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
 	int	i;
 
@@ -94,9 +94,11 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 char	*ft_strlcpy(char *dst, const char *src, int len)
 {
+	int	i;
 	int	j;
 
 	j = 0;
+	i = ft_strlen(src);
 	dst = malloc((len + 1) * sizeof(char));
 	while (j != len && src[j] != '\0')
 	{
@@ -105,17 +107,4 @@ char	*ft_strlcpy(char *dst, const char *src, int len)
 	}
 	dst[j] = '\0';
 	return (dst);
-}
-
-
-void* ft_memset(void* src, int set, int size)
-{
-	int i = 0;
-	unsigned char* reg_bytes = (unsigned char*)src;
-	while (i < size)
-	{
-		reg_bytes[i] = set;
-		i++;
-	}
-	return src;
 }

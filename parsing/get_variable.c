@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_variable.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:21:22 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/22 00:41:07 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/07/20 18:39:47 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	get_var(char *str, int f, int l, t_env **env)
 {
+	t_env	*emt;
 	char	*var;
 	int		len;
 	int		i;
@@ -29,17 +30,14 @@ void	get_var(char *str, int f, int l, t_env **env)
 		i++;
 	}
 	var[i] = '\0';
-	if (ft_strlen(var) > 0)
-	{
-		add_var(env, var);
-		free(var);
-	}
+	add_var(env, var, ft_strlen(var));
+	free(var);
 }
 
 void	ft_search(char *s, t_env **env)
 {
 	int		i;
-	int		start;
+	int		start;	
 	char	quotes;
 	char	dollar_sign;
 
@@ -101,8 +99,10 @@ void	get_envirement(t_tokens *token, char **env)
 		ft_search(token->content, &emt);
 		while(emt)
 		{
-			if (emt->value[0] != '$')
-				emt->value = get_value(env, emt->value);
+			printf("rrrv \n%c\n", emt->value[0]);
+			// if (emt->value[0] != '$')
+			// 	emt->value = get_value(env, emt->value);
+			exit(0);
 			token->content = search_and_replace(token->content, emt->value);
 			free(emt->value);
 			free(emt);
@@ -110,4 +110,5 @@ void	get_envirement(t_tokens *token, char **env)
 		}
 		token = token->next;
 	}
+	// exit(0);
 }

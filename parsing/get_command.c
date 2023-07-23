@@ -3,15 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   get_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 06:41:05 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/22 01:03:25 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/07/19 23:51:25 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+void	add_command(t_command **command, char *content)
+{
+	t_command	*cmd;
+
+	cmd = *command;
+	if (cmd->cmd_num->cmd_num == 0)
+	{
+		cmd->cmd_num->cmd_num++;
+		cmd->command = ft_strdup(content);
+		cmd->next = NULL;
+	}
+	else
+	{
+		cmd->command = ft_strdup(content);
+		cmd->next = NULL;
+	}
+}
+
+void	add_args(t_args **args, char *content)
+{
+	t_args	*newnode;
+	t_args	*tmp;
+
+	newnode = malloc(sizeof(t_args));
+	newnode->args = ft_strdup(content);
+	newnode->next = NULL;
+	if (*args == NULL)
+		*args = newnode;
+	else
+	{
+		tmp = *args;
+		while(tmp->next)
+			tmp = tmp->next;
+		tmp->next = newnode;
+	}
+}
 
 void	add_files(t_files **files, char *content, char *rdac)
 {
@@ -31,7 +67,7 @@ void	add_files(t_files **files, char *content, char *rdac)
 	if (*files == NULL)
 		*files = newnode;
 	else
-	{
+	{	
 		tmp = *files;
 		while (tmp->next)
 			tmp = tmp->next;
@@ -39,13 +75,16 @@ void	add_files(t_files **files, char *content, char *rdac)
 	}
 }
 
-void	add_var(t_env **env, char *content)
+void	add_var(t_env **env, char *content, int	num)
 {
 	t_env	*newnode;
 	t_env	*tmp;
 
 	newnode = malloc(sizeof(t_env));
-	newnode->value = ft_strdup(content);
+	if (num > 0)
+		newnode->value = ft_strdup(content);
+	else
+		newnode->value = NULL;
 	newnode->next = NULL;
 	if (*env == NULL)
 		*env = newnode;

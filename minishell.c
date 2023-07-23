@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/22 05:06:00 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/07/20 07:16:28 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,39 +36,16 @@ t_files	*check_firts_token(t_tokens **token)
 	return (NULL);
 }
 
-char** concat_argv(t_command* cmd, t_tokens* token)
-{
-	int argv_len = 0;
-	t_tokens* tmp = token;
-	int i = 0;
-	char** ret;
-	while (tmp && !is_redirections(tmp->content) && ft_strcmp(tmp->content, "|"))
-	{
-		argv_len++;
-		tmp = tmp->next;
-	}
-	if (!cmd->argv)
-		ret = malloc(sizeof(char*) * argv_len + 1);
-	else
-	{
-		ret = realloc_arr(cmd->argv, argv_len);
-		i = calc_arr_len(cmd->argv);
-	}
-	while (token && !is_redirections(token->content) && ft_strcmp(token->content, "|"))
-	{
-		ret[i] = ft_strdup(token->content);
-		i++;
-		token = token->next;
-	}
-	ret[i] = NULL;
-	return ret;
-}
-
-void	parcing(t_tokens *token, t_command **cmd)
+void	parsing(t_tokens *token, t_command **cmd)
 {
 	t_command	*command;
 
 	command = *cmd;
+	command->files = NULL;
+	command->args = NULL;
+	command->files = check_firts_token(&token);
+	add_command(&command, token->content);
+	token = token->next;
 	while(token)
 	{
 		if (ft_strcmp(token->content, "|") == 0)
@@ -76,22 +53,49 @@ void	parcing(t_tokens *token, t_command **cmd)
 		else if (is_redirections(token->content))
 		{
 			add_files(&command->files, token->next->content, token->content);
-			token = token->next->next;
+			token = token->next;
 		}
-		else
-		{
-			command->argv = concat_argv(command, token);
-			while (token && !is_redirections(token->content) && ft_strcmp(token->content, "|"))
-				token = token->next;
-		}
+		else if (is_redirections(token->content) == 0 
+			|| ft_strcmp(token->content, "|") == 1)
+			add_args(&command->args, token->content);
+		token = token->next;
 	}
 	if (token)
 	{
 		command->next = malloc(sizeof(t_command));
-		ft_memset(command->next, 0, sizeof(t_command));
-		command->next->out = 1;
-		parcing(token->next, &command->next);
+		command->next->cmd_num = malloc(sizeof(t_cmd_nmbr));
+		command->next->cmd_num->cmd_num = command->cmd_num->cmd_num;
+		parsing(token->next, &command->next);
 	}
+}
+
+void	convert_linkedlist(t_command *cmd)
+{
+	t_args	*args;
+	int		len;
+	int		i;
+
+	len = 0;
+	i = 0;
+	args = cmd->args;
+	while(args)
+	{
+		len++;
+		args = args->next;
+	}
+	cmd->arguments = malloc((len + 2) * sizeof(char*));
+	while((i - 1) != len)
+	{
+		if (i == 0)
+			cmd->arguments[i] = ft_strdup(cmd->command);
+		else
+		{
+			cmd->arguments[i] = ft_strdup(cmd->args->args);
+			cmd->args = cmd->args->next;
+		}
+		i++;
+	}
+	cmd->arguments[i] = NULL;
 }
 
 int main(int ac, char **av, char **env)
@@ -100,32 +104,27 @@ int main(int ac, char **av, char **env)
 	t_command	*command;
 	char		*input;
 
-	(void)ac;
-	(void)av;
 	while (1)
 	{
 		node_head = NULL;
 		command = malloc(sizeof(t_command));
-		ft_memset(command, 0, sizeof(t_command));
-		command->out = 1;
+		command->cmd_num = malloc(sizeof(t_cmd_nmbr));
+		command->cmd_num->cmd_num = 0;
 		input = readline("\033[31m~minishell$> \033[0m");
 		if (ft_strlen(input) != 0)
 		{
 			add_history(input);
 			super_split(&node_head ,input);
-			get_envirement(node_head, env);
+			// get_envirement(node_head, env);
 			if (check_syntax_error(node_head) == 1 || check_brakets(input) == 1)
-			{
 				printf("minishell~: syntax error near unexpected token\n");
-				continue;
-			}
 			else
 			{
-				parcing(node_head, &command);
+				parsing(node_head, &command);
+				convert_linkedlist(command);
 			}
-			if (command)
+			if (command->cmd_num->cmd_num > 0)
 			{
-				// _exec(command, env);
 				print_command(command);
 				free_command(command);
 			}

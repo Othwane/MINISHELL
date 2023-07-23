@@ -54,18 +54,22 @@ char    *search_and_replace(char *src, char *value)
 	token = malloc(sizeof(char) * (len + 1));
 	while(i < len)
 	{
-		if (src[j] == '$' && k == 0)
+		if ((src[j] == '$' && src[j + 1] != ' ') && k == 0)
 		{
 			j++;
 			while(check_ifvalid(src[j]))
 				j++;
 			if (value)
+			{
 				while(value[k])
+				{
 					token[i++] = value[k++];
+
+				}
+			}
 		}
 		token[i++] = src[j++];
 	}
 	free(src);
-	token[i] = '\0';
 	return (token);
 }
