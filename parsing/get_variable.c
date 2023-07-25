@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_variable.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:21:22 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/20 18:39:47 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/07/25 18:20:53 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	get_var(char *str, int f, int l, t_env **env)
 {
-	t_env	*emt;
+	// t_env	*emt;
 	char	*var;
 	int		len;
 	int		i;
@@ -37,7 +37,7 @@ void	get_var(char *str, int f, int l, t_env **env)
 void	ft_search(char *s, t_env **env)
 {
 	int		i;
-	int		start;	
+	int		start;
 	char	quotes;
 	char	dollar_sign;
 
@@ -92,6 +92,7 @@ char	*get_value(char **env, char *var)
 void	get_envirement(t_tokens *token, char **env)
 {
 	t_env *emt;
+	(void)env;
 
 	emt = NULL;
 	while (token)

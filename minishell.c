@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/20 07:16:28 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/07/25 18:10:18 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,14 @@ void	parsing(t_tokens *token, t_command **cmd)
 	command = *cmd;
 	command->files = NULL;
 	command->args = NULL;
+	command->outfile = 1;
+	command->infile = 0;
 	command->files = check_firts_token(&token);
-	add_command(&command, token->content);
+	command->next = NULL;
+	command->cmd_num = malloc(sizeof(t_cmd_nmbr));
+	command->arguments = NULL;
+	command->command = ft_strdup(token->content);
+	// add_command(&command, token->content);
 	token = token->next;
 	while(token)
 	{
@@ -55,16 +61,21 @@ void	parsing(t_tokens *token, t_command **cmd)
 			add_files(&command->files, token->next->content, token->content);
 			token = token->next;
 		}
-		else if (is_redirections(token->content) == 0 
+		else if (is_redirections(token->content) == 0
 			|| ft_strcmp(token->content, "|") == 1)
 			add_args(&command->args, token->content);
 		token = token->next;
 	}
+	convert_linkedlist(command);
 	if (token)
 	{
 		command->next = malloc(sizeof(t_command));
 		command->next->cmd_num = malloc(sizeof(t_cmd_nmbr));
 		command->next->cmd_num->cmd_num = command->cmd_num->cmd_num;
+		command->next->next = NULL;
+		command->next->arguments = NULL;
+		command->next->outfile = 1;
+		command->next->infile = 0;
 		parsing(token->next, &command->next);
 	}
 }
@@ -100,6 +111,8 @@ void	convert_linkedlist(t_command *cmd)
 
 int main(int ac, char **av, char **env)
 {
+	(void)ac;
+	(void)av;
 	t_tokens	*node_head;
 	t_command	*command;
 	char		*input;
@@ -121,11 +134,11 @@ int main(int ac, char **av, char **env)
 			else
 			{
 				parsing(node_head, &command);
-				convert_linkedlist(command);
+				_exec(command, env);
 			}
 			if (command->cmd_num->cmd_num > 0)
 			{
-				print_command(command);
+				// print_command(command);
 				free_command(command);
 			}
 			else

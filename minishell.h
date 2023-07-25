@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/20 11:07:10 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/07/25 18:20:02 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ typedef struct cmd_nmbr
 
 typedef struct s_command
 {
+	int 				infile;
+	int					outfile;
 	char				*command;
 	char				**arguments;
 	t_cmd_nmbr			*cmd_num;
@@ -70,7 +72,7 @@ int						string_count(char *str);
 char					*ft_substr(char const *s, int start, int len);
 char					*ft_strdup(const char *s1);
 char					*ft_strlcpy(char *dst, const char *src, int len);
-size_t					ft_strlen(const char *s);
+int					ft_strlen(const char *s);
 int						check_syntax_error(t_tokens  *token);
 int						ft_strcmp(const char *s1, const char *s2);
 void					add_command(t_command **command, char *content);
@@ -86,5 +88,6 @@ int						is_redirections(char *token);
 int						check_ifvalid(char c);
 int						special_strlen(char	*env);
 char					*search_and_replace(char *src, char *value);
-
+void					convert_linkedlist(t_command *cmd);
+void					_exec(t_command *command, char** env);
 #endif
