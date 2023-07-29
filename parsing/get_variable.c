@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_variable.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:21:22 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/25 18:20:53 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/07/26 20:08:14 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	get_var(char *str, int f, int l, t_env **env)
 {
-	// t_env	*emt;
+	t_env	*emt;
 	char	*var;
 	int		len;
 	int		i;
@@ -37,7 +37,7 @@ void	get_var(char *str, int f, int l, t_env **env)
 void	ft_search(char *s, t_env **env)
 {
 	int		i;
-	int		start;
+	int		start;	
 	char	quotes;
 	char	dollar_sign;
 
@@ -48,12 +48,16 @@ void	ft_search(char *s, t_env **env)
 	{
 		if ((s[i] == 34 || s[i] == 39) && quotes == 0)
 			quotes = s[i];
-		else if (s[i] == '$')
+		else if (s[i] == '$' && check_ifvalid(s[i + 1]))
 		{
 			dollar_sign = '$';
 			start = (++i);
 			while (check_ifvalid(s[i + 1]))
+			{
 				i++;
+				if (s[i - 1] >= '0' && s[i - 1] <= '9')
+					break;
+			}
 			if ((quotes == 34 && dollar_sign == '$') || (dollar_sign == '$' && quotes == 0))
 				get_var(s, start, i, env);
 		}
@@ -92,7 +96,6 @@ char	*get_value(char **env, char *var)
 void	get_envirement(t_tokens *token, char **env)
 {
 	t_env *emt;
-	(void)env;
 
 	emt = NULL;
 	while (token)
@@ -100,10 +103,9 @@ void	get_envirement(t_tokens *token, char **env)
 		ft_search(token->content, &emt);
 		while(emt)
 		{
-			printf("rrrv \n%c\n", emt->value[0]);
-			// if (emt->value[0] != '$')
-			// 	emt->value = get_value(env, emt->value);
-			exit(0);
+			printf("%s\n", emt->value);
+			if (emt->value[0] != '$')
+				emt->value = get_value(env, emt->value);
 			token->content = search_and_replace(token->content, emt->value);
 			free(emt->value);
 			free(emt);
@@ -111,5 +113,4 @@ void	get_envirement(t_tokens *token, char **env)
 		}
 		token = token->next;
 	}
-	// exit(0);
 }

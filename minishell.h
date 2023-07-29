@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/25 18:20:02 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/07/29 16:57:57 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 #include <unistd.h>
 #include <readline/readline.h>
 #include <string.h>
+#include <sys/types.h>
+#include <signal.h>
+#include <errno.h>
 
 #define INPUT 1
 #define OUTPUT 2
@@ -36,11 +39,9 @@ typedef struct cmd_nmbr
 
 typedef struct s_command
 {
-	int 				infile;
-	int					outfile;
 	char				*command;
 	char				**arguments;
-	t_cmd_nmbr			*cmd_num;
+	int					cmd_num;
 	t_args				*args;
 	struct s_files		*files;
 	struct s_command	*next;
@@ -49,7 +50,6 @@ typedef struct s_command
 typedef struct s_files
 {
 	char				*filename;
-	char				*redairection;
 	int					red_type;
 	struct s_files		*next;
 }						t_files;
@@ -58,13 +58,13 @@ typedef struct s_env
 {
 	char				*value;
 	struct s_env		*next;
-}   					t_env;
+}						t_env;
 
 typedef struct s_tokens
 {
 	char				*content;
 	struct s_tokens		*next;
-}   					t_tokens;
+}						t_tokens;
 
 int						check_brakets(char *str);
 void					super_split(t_tokens **my_list, char *str);
@@ -72,7 +72,8 @@ int						string_count(char *str);
 char					*ft_substr(char const *s, int start, int len);
 char					*ft_strdup(const char *s1);
 char					*ft_strlcpy(char *dst, const char *src, int len);
-int					ft_strlen(const char *s);
+char					*ft_strjoin(char *s1, char *s2);
+size_t					ft_strlen(const char *s);
 int						check_syntax_error(t_tokens  *token);
 int						ft_strcmp(const char *s1, const char *s2);
 void					add_command(t_command **command, char *content);
@@ -88,6 +89,9 @@ int						is_redirections(char *token);
 int						check_ifvalid(char c);
 int						special_strlen(char	*env);
 char					*search_and_replace(char *src, char *value);
-void					convert_linkedlist(t_command *cmd);
-void					_exec(t_command *command, char** env);
+void					remove_quotes(t_tokens *token);
+void					_exec(t_command *cmd);
+void					ft_pipe(t_command *cmd, char **paths, int *pipefd, int c_num);
+void					exec_onecmd(t_command *cmd, char **paths);
+
 #endif

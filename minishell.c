@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/25 18:10:18 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/07/29 16:43:28 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,8 @@ void	parsing(t_tokens *token, t_command **cmd)
 	command = *cmd;
 	command->files = NULL;
 	command->args = NULL;
-	command->outfile = 1;
-	command->infile = 0;
 	command->files = check_firts_token(&token);
-	command->next = NULL;
-	command->cmd_num = malloc(sizeof(t_cmd_nmbr));
-	command->arguments = NULL;
-	command->command = ft_strdup(token->content);
-	// add_command(&command, token->content);
+	add_command(&command, token->content);
 	token = token->next;
 	while(token)
 	{
@@ -61,26 +55,20 @@ void	parsing(t_tokens *token, t_command **cmd)
 			add_files(&command->files, token->next->content, token->content);
 			token = token->next;
 		}
-		else if (is_redirections(token->content) == 0
+		else if (is_redirections(token->content) == 0 
 			|| ft_strcmp(token->content, "|") == 1)
 			add_args(&command->args, token->content);
 		token = token->next;
 	}
-	convert_linkedlist(command);
 	if (token)
 	{
 		command->next = malloc(sizeof(t_command));
-		command->next->cmd_num = malloc(sizeof(t_cmd_nmbr));
-		command->next->cmd_num->cmd_num = command->cmd_num->cmd_num;
-		command->next->next = NULL;
-		command->next->arguments = NULL;
-		command->next->outfile = 1;
-		command->next->infile = 0;
+		command->next->cmd_num = command->cmd_num;
 		parsing(token->next, &command->next);
 	}
 }
 
-void	convert_linkedlist(t_command *cmd)
+void	convert_linkedlist(t_command *cmd, t_args *argument)
 {
 	t_args	*args;
 	int		len;
@@ -95,24 +83,21 @@ void	convert_linkedlist(t_command *cmd)
 		args = args->next;
 	}
 	cmd->arguments = malloc((len + 2) * sizeof(char*));
+	cmd->arguments[i++] = ft_strdup(cmd->command);
 	while((i - 1) != len)
 	{
-		if (i == 0)
-			cmd->arguments[i] = ft_strdup(cmd->command);
-		else
-		{
-			cmd->arguments[i] = ft_strdup(cmd->args->args);
-			cmd->args = cmd->args->next;
-		}
-		i++;
+		cmd->arguments[i++] = ft_strdup(argument->args);
+		free(argument->args);
+		free(argument);
+		argument = argument->next;
 	}
 	cmd->arguments[i] = NULL;
+	if (cmd->next != NULL)
+		convert_linkedlist(cmd->next, cmd->next->args);
 }
 
 int main(int ac, char **av, char **env)
 {
-	(void)ac;
-	(void)av;
 	t_tokens	*node_head;
 	t_command	*command;
 	char		*input;
@@ -121,28 +106,29 @@ int main(int ac, char **av, char **env)
 	{
 		node_head = NULL;
 		command = malloc(sizeof(t_command));
-		command->cmd_num = malloc(sizeof(t_cmd_nmbr));
-		command->cmd_num->cmd_num = 0;
+		command->cmd_num = 0;
 		input = readline("\033[31m~minishell$> \033[0m");
 		if (ft_strlen(input) != 0)
 		{
 			add_history(input);
 			super_split(&node_head ,input);
+			// print_list(node_head);
+			// printf("<<<<--------->>>>>\n");
 			// get_envirement(node_head, env);
+			remove_quotes(node_head);
 			if (check_syntax_error(node_head) == 1 || check_brakets(input) == 1)
 				printf("minishell~: syntax error near unexpected token\n");
 			else
 			{
 				parsing(node_head, &command);
-				_exec(command, env);
+				convert_linkedlist(command, command->args);
+				_exec(command);
 			}
-			if (command->cmd_num->cmd_num > 0)
-			{
-				// print_command(command);
+			if (command->cmd_num > 0)
 				free_command(command);
-			}
 			else
 				free(command);
+			// print_list(node_head);
 			free_tokens(node_head);
 		}
 		free(input);

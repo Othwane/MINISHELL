@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_and_replace.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 10:17:40 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/20 18:48:24 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/07/26 19:55:21 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,7 @@ char    *search_and_replace(char *src, char *value)
 			if (value)
 			{
 				while(value[k])
-				{
 					token[i++] = value[k++];
-
-				}
 			}
 		}
 		token[i++] = src[j++];

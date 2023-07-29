@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 06:41:05 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/19 23:51:25 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/07/29 16:47:21 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	add_command(t_command **command, char *content)
 	t_command	*cmd;
 
 	cmd = *command;
-	if (cmd->cmd_num->cmd_num == 0)
+	if (cmd->cmd_num == 0)
 	{
-		cmd->cmd_num->cmd_num++;
+		cmd->cmd_num++;
 		cmd->command = ft_strdup(content);
 		cmd->next = NULL;
 	}
@@ -56,7 +56,6 @@ void	add_files(t_files **files, char *content, char *rdac)
 
 	newnode = malloc(sizeof(t_files));
 	newnode->filename = ft_strdup(content);
-	newnode->redairection = ft_strdup(rdac);
 	if (ft_strcmp(rdac, ">") == 0 || ft_strcmp(rdac, ">>") == 0)
 		newnode->red_type = OUTPUT;
 	else if (ft_strcmp(rdac, "<") == 0)
