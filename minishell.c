@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/29 16:43:28 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/03 04:18:10 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ void	parsing(t_tokens *token, t_command **cmd)
 	command = *cmd;
 	command->files = NULL;
 	command->args = NULL;
+	command->infile = 0;
+	command->outfile = 1;
+	command->cmd_path = NULL;
 	command->files = check_firts_token(&token);
 	add_command(&command, token->content);
 	token = token->next;
@@ -55,7 +58,7 @@ void	parsing(t_tokens *token, t_command **cmd)
 			add_files(&command->files, token->next->content, token->content);
 			token = token->next;
 		}
-		else if (is_redirections(token->content) == 0 
+		else if (is_redirections(token->content) == 0
 			|| ft_strcmp(token->content, "|") == 1)
 			add_args(&command->args, token->content);
 		token = token->next;
@@ -122,7 +125,7 @@ int main(int ac, char **av, char **env)
 			{
 				parsing(node_head, &command);
 				convert_linkedlist(command, command->args);
-				_exec(command);
+				_exec(command, env);
 			}
 			if (command->cmd_num > 0)
 				free_command(command);

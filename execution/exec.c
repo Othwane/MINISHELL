@@ -3,31 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 21:57:48 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/29 16:53:40 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/03 13:42:26 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	set_paths(char **paths)
+void	_exec(t_command *command, char** env)
 {
-	paths[0] = "/usr/bin/";
-	paths[1] = "/bin/";
-	paths[2] = "/usr/sbin/";
-	paths[3] = "/sbin/";
-	paths[4] = "/usr/local/bin/";
-	paths[5] = "/usr/local/sbin/";
-	paths[6] = NULL;
-}
-
-void    _exec(t_command *cmd)
-{
-	char	*paths[7];
-	
-	set_paths(paths);
-	if (cmd->cmd_num == 1)
-		exec_onecmd(cmd, paths);
+	int pipefd[2];
+	while (command)
+	{
+		if (!command->arguments)
+			return;
+		if (command->next)
+		{
+			pipe(pipefd);
+			command->outfile = pipefd[1];
+		}
+		int child_pid = fork();
+		if (!child_pid)
+		{
+			if (command->infile != 0)
+			{
+				dup2(command->infile, 0);
+				close(command->infile);
+			}
+			if (command->outfile != 1)
+			{
+				dup2(command->outfile, 1);
+				close(command->outfile);
+			}
+			command->cmd_path = findpath(command->command, env);
+			execve(command->cmd_path, command->arguments, env);
+		}
+		if (command->outfile != 1)
+			close(command->outfile);
+		if (command->next)
+			command->next->infile = pipefd[0];
+		if (command->infile != 0)
+			close(command->infile);
+		// do not wait for each command one by one, execute all of them at once then wait for them all to finish
+		// wait(&child_pid);
+		command = command->next;
+	}
+	while (wait(NULL) > 0);
+	// save the last command exit status, maybe return it
 }

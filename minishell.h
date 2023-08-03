@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/29 16:57:57 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/03 04:23:03 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ typedef struct s_command
 	char				*command;
 	char				**arguments;
 	int					cmd_num;
+	int					infile;
+	int					outfile;
+	char				*cmd_path;
 	t_args				*args;
 	struct s_files		*files;
 	struct s_command	*next;
@@ -71,6 +74,10 @@ void					super_split(t_tokens **my_list, char *str);
 int						string_count(char *str);
 char					*ft_substr(char const *s, int start, int len);
 char					*ft_strdup(const char *s1);
+char					**ft_split(char const *s, char c);
+int						ft_strncmp(char *s1, char *s2, int n);
+char					*ft_strjoin(char *s1, char *s2);
+char					*ft_strchr(char *s, int c);
 char					*ft_strlcpy(char *dst, const char *src, int len);
 char					*ft_strjoin(char *s1, char *s2);
 size_t					ft_strlen(const char *s);
@@ -90,8 +97,8 @@ int						check_ifvalid(char c);
 int						special_strlen(char	*env);
 char					*search_and_replace(char *src, char *value);
 void					remove_quotes(t_tokens *token);
-void					_exec(t_command *cmd);
-void					ft_pipe(t_command *cmd, char **paths, int *pipefd, int c_num);
-void					exec_onecmd(t_command *cmd, char **paths);
-
+void					_exec(t_command *command, char** env);
+// void					ft_pipe(t_command *cmd, char **paths, int *pipefd, int c_num);
+// void					exec_onecmd(t_command *cmd, char **paths);
+char					*findpath(char *cmd, char **envp);
 #endif

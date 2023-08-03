@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+         #
+#    By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/11 05:43:13 by aasselma          #+#    #+#              #
-#    Updated: 2023/07/29 16:53:10 by aasselma         ###   ########.fr        #
+#    Updated: 2023/08/03 04:19:30 by omajdoub         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,11 @@ SRC =	minishell.c ./parsing/errors.c ./parsing/get_tokens.c ./parsing/count_toke
 		./parsing/free.c ./parsing/get_variable.c ./parsing/utils.c ./parsing/search_and_replace.c \
 		./parsing/reomve_qoutes.c \
 		./execution/exec.c ./execution/exec_onecommand.c ./execution/exec_utils.c \
-		
+
 
 OBJ	= $(SRC:%.c=%.o)
 
-FLAGS = -Wall -Wextra -Werror 
+FLAGS = -Wall -Wextra -Werror
 # -g -fsanitize=address
 
 RM = rm -f
