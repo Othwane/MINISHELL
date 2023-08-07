@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 06:41:05 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/29 16:47:21 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/07 13:38:34 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ void	add_files(t_files **files, char *content, char *rdac)
 
 	newnode = malloc(sizeof(t_files));
 	newnode->filename = ft_strdup(content);
-	if (ft_strcmp(rdac, ">") == 0 || ft_strcmp(rdac, ">>") == 0)
+	if (ft_strcmp(rdac, ">>") == 0)
+		newnode->red_type = APPEND;
+	else if (ft_strcmp(rdac, ">") == 0)
 		newnode->red_type = OUTPUT;
 	else if (ft_strcmp(rdac, "<") == 0)
 		newnode->red_type = INPUT;
@@ -66,7 +68,7 @@ void	add_files(t_files **files, char *content, char *rdac)
 	if (*files == NULL)
 		*files = newnode;
 	else
-	{	
+	{
 		tmp = *files;
 		while (tmp->next)
 			tmp = tmp->next;

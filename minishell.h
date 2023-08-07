@@ -6,7 +6,7 @@
 /*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/03 04:23:03 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/08/08 00:29:45 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
 
 #define INPUT 1
 #define OUTPUT 2
-#define HERDOCE 3
+#define APPEND 3
+#define HERDOCE 4
 
 typedef struct s_args
 {
@@ -98,7 +99,5 @@ int						special_strlen(char	*env);
 char					*search_and_replace(char *src, char *value);
 void					remove_quotes(t_tokens *token);
 void					_exec(t_command *command, char** env);
-// void					ft_pipe(t_command *cmd, char **paths, int *pipefd, int c_num);
-// void					exec_onecmd(t_command *cmd, char **paths);
 char					*findpath(char *cmd, char **envp);
 #endif
