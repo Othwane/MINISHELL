@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 21:57:48 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/07 13:39:52 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/08/08 18:58:09 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,10 @@ void _exec(t_command *command, char** env)
 			}
             command->cmd_path = findpath(command->command, env);
             if ((access(command->cmd_path, F_OK)))
-                write(2, "command not found.\n", 20);
+                write(2, "~minishell$> :command not found.\n", 33);
             else
                 execve(command->cmd_path, command->arguments, env);
+			exit(1);
         }
         if (command->outfile != 1)
             close(command->outfile);

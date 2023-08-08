@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 10:17:40 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/26 19:55:21 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/07 21:13:38 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	count_tokenlen(char *str)
 	return (len);
 }
 
-char    *search_and_replace(char *src, char *value)
+char	*search_and_replace(char *src, char *value, int index)
 {
 	char    *token;
 	int     i;
@@ -52,21 +52,20 @@ char    *search_and_replace(char *src, char *value)
 	k = 0;
 	len = count_tokenlen(src) + ft_strlen(value);
 	token = malloc(sizeof(char) * (len + 1));
-	while(i < len)
+	while(i != len)
 	{
-		if ((src[j] == '$' && src[j + 1] != ' ') && k == 0)
+		token[i++] = src[j++];
+		if (i == index)
 		{
 			j++;
 			while(check_ifvalid(src[j]))
 				j++;
 			if (value)
-			{
 				while(value[k])
 					token[i++] = value[k++];
-			}
 		}
-		token[i++] = src[j++];
 	}
+	token[i] = '\0';
 	free(src);
 	return (token);
 }

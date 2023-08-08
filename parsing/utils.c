@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 23:52:04 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/20 07:58:26 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/07 23:52:54 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,26 @@ char	*get_variable(char *env, int end)
 	return (var);
 }
 
+int	in_qoute(char *token)
+{
+	int	i;
+
+	i = 0;
+	while(token[i])
+	{
+		if (token[i] == 34 || token[i] == 39)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	special_strlen(char	*env)
 {
 	int	i;
 
 	i = 0;
-	while(env[i - 1] != '=')
+	while(env[i] != '=')
 		i++;
-	return (i);
+	return (++i);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_tokens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 05:35:46 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/18 20:09:53 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/08 01:24:16 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ void	add_new(t_tokens **t_list, char *content)
 
 	newnode = malloc(sizeof(t_tokens));
 	newnode->content = ft_strdup(content);
+	if(in_qoute(content))
+		newnode->qoute = 1;
+	else
+		newnode->qoute = 0;
 	newnode->next = NULL;
 	if (*t_list == NULL)
 		*t_list = newnode;

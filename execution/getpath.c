@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path.c                                             :+:      :+:    :+:   */
+/*   getpath.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:05:27 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/08 00:27:42 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/08/08 01:28:35 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ char	*findpath(char *cmd, char **envp)
 	char	*command;
 
 	i = 0;
+	envsplited = NULL;
 	if (ft_strchr(cmd, '/'))
 	{
 		if (!access(cmd, F_OK))

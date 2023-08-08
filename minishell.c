@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/06 14:09:37 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/08/08 01:33:43 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ int main(int ac, char **av, char **env)
 	t_command	*command;
 	char		*input;
 
+	(void)ac;
+	(void)av;
 	while (1)
 	{
 		node_head = NULL;
@@ -115,9 +117,7 @@ int main(int ac, char **av, char **env)
 		{
 			add_history(input);
 			super_split(&node_head ,input);
-			// print_list(node_head);
-			// printf("<<<<--------->>>>>\n");
-			// get_envirement(node_head, env);
+			get_envirement(node_head, env);
 			remove_quotes(node_head);
 			if (check_syntax_error(node_head) == 1 || check_brakets(input) == 1)
 				printf("minishell~: syntax error near unexpected token\n");
@@ -131,7 +131,6 @@ int main(int ac, char **av, char **env)
 				free_command(command);
 			else
 				free(command);
-			// print_list(node_head);
 			free_tokens(node_head);
 		}
 		free(input);

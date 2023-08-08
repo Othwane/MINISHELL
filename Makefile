@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+         #
+#    By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/11 05:43:13 by aasselma          #+#    #+#              #
-#    Updated: 2023/08/08 00:36:58 by omajdoub         ###   ########.fr        #
+#    Updated: 2023/08/08 01:23:41 by aasselma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRC =	minishell.c ./parsing/errors.c ./parsing/get_tokens.c ./parsing/count_toke
 
 OBJ	= $(SRC:%.c=%.o)
 
-FLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
 
 RM = rm -f
 

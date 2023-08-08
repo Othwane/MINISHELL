@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 06:41:05 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/07 13:38:34 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/08/08 01:27:26 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,19 @@ void	add_files(t_files **files, char *content, char *rdac)
 
 	newnode = malloc(sizeof(t_files));
 	newnode->filename = ft_strdup(content);
-	if (ft_strcmp(rdac, ">>") == 0)
-		newnode->red_type = APPEND;
-	else if (ft_strcmp(rdac, ">") == 0)
+	if (ft_strcmp(rdac, ">") == 0 || ft_strcmp(rdac, ">>") == 0)
 		newnode->red_type = OUTPUT;
 	else if (ft_strcmp(rdac, "<") == 0)
 		newnode->red_type = INPUT;
+	else if (ft_strcmp(rdac, ">>") == 0)
+		newnode->red_type = APPEND;
 	else if (ft_strcmp(rdac, "<<") == 0)
 		newnode->red_type = HERDOCE;
 	newnode->next = NULL;
 	if (*files == NULL)
 		*files = newnode;
 	else
-	{
+	{	
 		tmp = *files;
 		while (tmp->next)
 			tmp = tmp->next;
@@ -76,12 +76,13 @@ void	add_files(t_files **files, char *content, char *rdac)
 	}
 }
 
-void	add_var(t_env **env, char *content, int	num)
+void	add_var(t_env **env, char *content, int	num, int start)
 {
 	t_env	*newnode;
 	t_env	*tmp;
 
 	newnode = malloc(sizeof(t_env));
+	newnode->index = (start - 1);
 	if (num > 0)
 		newnode->value = ft_strdup(content);
 	else
