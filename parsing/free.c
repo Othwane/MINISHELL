@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 22:34:27 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/29 16:41:57 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/09 05:41:51 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,12 @@ void	free_command(t_command *command)
 			command->files = command->files->next;
 			free(tmp);
 		}
-		while(command->arguments[i])
-			free(command->arguments[i++]);
-		free(command->arguments);
+		if (command->arguments)
+		{
+			while(command->arguments[i])
+				free(command->arguments[i++]);
+			free(command->arguments);
+		}
 		cmd = command;
 		command = command->next;
 		free(cmd->command);
@@ -77,10 +80,13 @@ void	free_command(t_command *command)
 
 void	free_tokens(t_tokens *token)
 {
+	t_tokens	*tmp;
+
 	while(token)
 	{
-		free(token->content);
-		free(token);
+		tmp = token;
 		token = token->next;
+		free(tmp->content);
+		free(tmp);
 	}
 }

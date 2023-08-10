@@ -6,7 +6,7 @@
 #    By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/11 05:43:13 by aasselma          #+#    #+#              #
-#    Updated: 2023/08/08 01:23:41 by aasselma         ###   ########.fr        #
+#    Updated: 2023/08/09 06:41:27 by aasselma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ cc = cc
 all: $(NAME)
 
 $(NAME) : $(OBJ)
-	@$(cc) $(FLAGS) -lreadline $(OBJ) -o $(NAME)
+	@$(cc) $(CFLAGS) -lreadline $(OBJ) -o $(NAME)
 	@printf "\033[1;32mfiles compiled successfully \033[0m\n"
 
 clean:

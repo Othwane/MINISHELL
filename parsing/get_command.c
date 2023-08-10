@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 06:41:05 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/08 01:27:26 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/09 03:43:14 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,9 @@ void	add_command(t_command **command, char *content)
 	t_command	*cmd;
 
 	cmd = *command;
-	if (cmd->cmd_num == 0)
-	{
-		cmd->cmd_num++;
-		cmd->command = ft_strdup(content);
-		cmd->next = NULL;
-	}
-	else
-	{
-		cmd->command = ft_strdup(content);
-		cmd->next = NULL;
-	}
+	cmd->cmd_num++;
+	cmd->command = ft_strdup(content);
+	cmd->next = NULL;
 }
 
 void	add_args(t_args **args, char *content)
@@ -63,7 +55,7 @@ void	add_files(t_files **files, char *content, char *rdac)
 	else if (ft_strcmp(rdac, ">>") == 0)
 		newnode->red_type = APPEND;
 	else if (ft_strcmp(rdac, "<<") == 0)
-		newnode->red_type = HERDOCE;
+		newnode->red_type = HERDOC;
 	newnode->next = NULL;
 	if (*files == NULL)
 		*files = newnode;

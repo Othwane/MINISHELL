@@ -41,14 +41,18 @@ int	ft_search(char *s, t_env **env)
 	int		start;	
 	char	quotes;
 	char	dollar_sign;
+	int		in;
 
 	i = 0;
 	quotes = 0;
 	dollar_sign = 0;
+	in = 0;
 	while (s[i] != '\0')
 	{
 		if ((s[i] == 34 || s[i] == 39) && quotes == 0)
 			quotes = s[i];
+		if (s[i] == 39)
+			in++;
 		else if (s[i] == '$' && check_ifvalid(s[i + 1]))
 		{
 			dollar_sign = '$';
@@ -59,8 +63,10 @@ int	ft_search(char *s, t_env **env)
 					break;
 				i++;
 			}
-			if ((quotes == 34 && dollar_sign == '$') || (dollar_sign == '$' && quotes == 0))
+			if ((quotes == 34 && dollar_sign == '$') || (dollar_sign == '$' && quotes == 0)
+				|| (dollar_sign == '$' && quotes == 39 && in == 2))
 			{
+				in = 0;
 				get_var(s, start, i, env);
 				return (0);
 			}
@@ -112,7 +118,6 @@ void	get_envirement(t_tokens *token, char **env)
 		res = ft_search(token->content, &emt);
 		if (emt)
 		{
-			// printf("")
 			if (emt->value[0] != '$')
 				emt->value = get_value(env, emt->value);
 			token->content = search_and_replace(token->content, emt->value, emt->index);

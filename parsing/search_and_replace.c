@@ -54,7 +54,6 @@ char	*search_and_replace(char *src, char *value, int index)
 	token = malloc(sizeof(char) * (len + 1));
 	while(i != len)
 	{
-		token[i++] = src[j++];
 		if (i == index)
 		{
 			j++;
@@ -64,8 +63,10 @@ char	*search_and_replace(char *src, char *value, int index)
 				while(value[k])
 					token[i++] = value[k++];
 		}
+		if (i < len)
+			token[i++] = src[j++];
 	}
-	token[i] = '\0';
+	token[len] = '\0';
 	free(src);
 	return (token);
 }

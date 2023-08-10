@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:54:03 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/07 06:27:12 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/08 23:12:26 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ char	*ft_strdup(const char *s1)
 	char	*dup;
 
 	i = 0;
+	if (s1 == NULL)
+		return (NULL);
 	s1_len = ft_strlen(s1);
 	dup = (char *) malloc(sizeof(char) * (s1_len + 1));
 	if (!dup)

@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/08 01:33:43 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/09 06:41:37 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,14 @@ t_files	*check_firts_token(t_tokens **token)
 
 	node = *token;
 	file = NULL;
-	while(node)
+	if (is_redirections(node->content))
 	{
-		if (is_redirections(node->content))
-		{
-			add_files(&file, node->next->content, node->content);
-			if (node->next->next)
-				node = node->next->next;
-		}
+		add_files(&file, node->next->content, node->content);
+		if (node->next->next)
+			*token = node->next->next;
 		else
-		{
-			*token = node;
-			return (file);
-		}
+			*token = NULL;
+		return (file);
 	}
 	return (NULL);
 }
@@ -41,14 +36,15 @@ void	parsing(t_tokens *token, t_command **cmd)
 	t_command	*command;
 
 	command = *cmd;
-	command->files = NULL;
-	command->args = NULL;
-	command->infile = 0;
-	command->outfile = 1;
-	command->cmd_path = NULL;
 	command->files = check_firts_token(&token);
-	add_command(&command, token->content);
-	token = token->next;
+	if (token)
+	{
+		if ((is_redirections(token->content) == 0) && (ft_strcmp(token->content, "|") != 0))
+		{
+			add_command(&command, token->content);
+			token = token->next;
+		}
+	}
 	while(token)
 	{
 		if (ft_strcmp(token->content, "|") == 0)
@@ -66,7 +62,15 @@ void	parsing(t_tokens *token, t_command **cmd)
 	if (token)
 	{
 		command->next = malloc(sizeof(t_command));
+		command->next->command = NULL;
+		command->next->arguments = NULL;
+		command->next->files = NULL;
+		command->next->args = NULL;
+		command->next->infile = 0;
+		command->next->outfile = 1;
+		command->next->cmd_path = NULL;
 		command->next->cmd_num = command->cmd_num;
+		command->next->next = NULL;
 		parsing(token->next, &command->next);
 	}
 }
@@ -87,14 +91,15 @@ void	convert_linkedlist(t_command *cmd, t_args *argument)
 	}
 	cmd->arguments = malloc((len + 2) * sizeof(char*));
 	cmd->arguments[i++] = ft_strdup(cmd->command);
-	while((i - 1) != len)
+	cmd->arguments[len + 1] = NULL;
+	while(argument)
 	{
 		cmd->arguments[i++] = ft_strdup(argument->args);
-		free(argument->args);
-		free(argument);
+		args = argument;
 		argument = argument->next;
+		free(args->args);
+		free(args);
 	}
-	cmd->arguments[i] = NULL;
 	if (cmd->next != NULL)
 		convert_linkedlist(cmd->next, cmd->next->args);
 }
@@ -109,28 +114,35 @@ int main(int ac, char **av, char **env)
 	(void)av;
 	while (1)
 	{
-		node_head = NULL;
-		command = malloc(sizeof(t_command));
-		command->cmd_num = 0;
-		input = readline("\033[31m~minishell$> \033[0m");
+		input = readline("~minishell$> ");
 		if (ft_strlen(input) != 0)
 		{
+			node_head = NULL;
+			command = malloc(sizeof(t_command));
+			command->cmd_num = 0;
+			command->command = NULL;
+			command->arguments = NULL;
+			command->files = NULL;
+			command->args = NULL;
+			command->infile = 0;
+			command->outfile = 1;
+			command->cmd_path = NULL;
 			add_history(input);
 			super_split(&node_head ,input);
 			get_envirement(node_head, env);
 			remove_quotes(node_head);
 			if (check_syntax_error(node_head) == 1 || check_brakets(input) == 1)
+			{
 				printf("minishell~: syntax error near unexpected token\n");
+				free(command);
+			}
 			else
 			{
 				parsing(node_head, &command);
 				convert_linkedlist(command, command->args);
 				_exec(command, env);
-			}
-			if (command->cmd_num > 0)
 				free_command(command);
-			else
-				free(command);
+			}
 			free_tokens(node_head);
 		}
 		free(input);

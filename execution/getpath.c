@@ -70,6 +70,8 @@ char	*findpath(char *cmd, char **envp)
 
 	i = 0;
 	envsplited = NULL;
+	if (cmd == NULL)
+		return (NULL);
 	if (ft_strchr(cmd, '/'))
 	{
 		if (!access(cmd, F_OK))

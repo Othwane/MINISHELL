@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/08 01:26:11 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/08 22:07:00 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@
 #include <sys/types.h>
 #include <signal.h>
 #include <errno.h>
+#include <fcntl.h>
 
 #define INPUT 1
 #define OUTPUT 2
-#define HERDOCE 3
 #define APPEND 4
+#define HERDOC 3
 
 typedef struct s_args
 {
