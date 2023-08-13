@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/08 22:07:00 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/13 15:44:57 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,13 @@ typedef struct s_args
 {
 	char				*args;
 	struct s_args		*next;
-}						t_args;
+}					t_args;
+
+typedef struct s_env_e {
+	char* key;
+	char* value;
+	struct s_env_e* next;
+} t_env_e;
 
 typedef struct cmd_nmbr
 {
@@ -104,5 +110,20 @@ char					*search_and_replace(char *src, char *value, int index);
 void					remove_quotes(t_tokens *token);
 void					_exec(t_command *command, char** env);
 char					*findpath(char *cmd, char **envp);
+void					input_redir(t_command *command);
+void					output_redir(t_command *command);
+void					append_redir(t_command *command);
+void					redir_op(t_command *command);
+int						my_herdoc(int fd, char *filename);
+t_env_e*				parse_env(char** env);
+void 					print_env_ll(t_env_e* lst);
+
+int						echo_b(char **args);
+int						pwd_b(void);
+int 					cd_b(char** argv);
+int						exit_b();
+void					exec_builtins(t_command *command, char **env);
+int		is_builtin(char *arg);
+
 
 #endif

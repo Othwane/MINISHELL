@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/09 06:41:37 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/13 02:02:34 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,8 @@ int main(int ac, char **av, char **env)
 			add_history(input);
 			super_split(&node_head ,input);
 			get_envirement(node_head, env);
+			// t_env_e* env_p = parse_env(env);
+			// print_env_ll(env_p);
 			remove_quotes(node_head);
 			if (check_syntax_error(node_head) == 1 || check_brakets(input) == 1)
 			{

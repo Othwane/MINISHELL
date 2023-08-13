@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+         #
+#    By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/11 05:43:13 by aasselma          #+#    #+#              #
-#    Updated: 2023/08/09 06:41:27 by aasselma         ###   ########.fr        #
+#    Updated: 2023/08/13 15:47:04 by omajdoub         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,9 @@ SRC =	minishell.c ./parsing/errors.c ./parsing/get_tokens.c ./parsing/count_toke
 		./parsing/libft_functions.c ./parsing/handel_syntax_error.c ./parsing/get_command.c \
 		./parsing/free.c ./parsing/get_variable.c ./parsing/utils.c ./parsing/search_and_replace.c \
 		./parsing/reomve_qoutes.c \
-		./execution/exec.c ./execution/getpath.c ./execution/exec_utils.c
+		./execution/exec.c ./execution/getpath.c ./execution/exec_utils.c \
+		./execution/exec_redir.c ./parsing/env_parser.c \
+		./builtins/echo_b.c ./builtins/pwd_b.c ./builtins/builtins.c ./builtins/cd_b.c ./builtins/exit_b.c
 
 
 OBJ	= $(SRC:%.c=%.o)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:54:03 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/08 23:12:26 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/11 18:31:49 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,9 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 char	*ft_strlcpy(char *dst, const char *src, int len)
 {
-	int	i;
 	int	j;
 
 	j = 0;
-	i = ft_strlen(src);
 	dst = malloc((len + 1) * sizeof(char));
 	while (j != len && src[j] != '\0')
 	{
