@@ -1,13 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset_b.c                                          :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/12 23:13:37 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/15 03:17:41 by aasselma         ###   ########.fr       */
+/*   Created: 2023/08/12 01:20:36 by aasselma          #+#    #+#             */
+/*   Updated: 2023/08/15 01:50:22 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include	"minishell.h"
+
+void signal_handler(int signum)
+{
+    (void)signum;
+    printf("\n");
+    rl_on_new_line();
+    rl_replace_line("", 0);
+    rl_redisplay();
+}
+
+void    set_signal()
+{
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, SIG_IGN);
+}

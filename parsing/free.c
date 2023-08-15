@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 22:34:27 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/09 05:41:51 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/13 06:52:52 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	print_command(t_command *my_list)
 		while(file_head)
 		{
 			printf("			File name %s \n", file_head->filename);
+			printf("			qoute %d \n", file_head->quote);
 			file_head = file_head->next;
 		}
 		printf("\n------------\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_and_replace.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 10:17:40 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/07 21:13:38 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/13 03:48:22 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	count_tokenlen(char *str)
 	return (len);
 }
 
-char	*search_and_replace(char *src, char *value, int index)
+char	*s_and_r(char *src, char *value, int index)
 {
 	char    *token;
 	int     i;

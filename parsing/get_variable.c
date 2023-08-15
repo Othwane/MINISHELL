@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_variable.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:21:22 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/12 20:23:19 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/08/14 15:54:33 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,29 @@ void	get_var(char *str, int f, int l, t_env **env)
 	free(var);
 }
 
-int	ft_search(char *s, t_env **env)
+int	ft_searchfor_var(char *s, t_env **env)
 {
 	int		i;
-	int		start;
+	int		start;	
 	char	quotes;
 	char	dollar_sign;
-	int		in;
+	int		s_in;
 
 	i = 0;
 	quotes = 0;
 	dollar_sign = 0;
-	in = 0;
+	s_in = 0;
 	while (s[i] != '\0')
 	{
 		if ((s[i] == 34 || s[i] == 39) && quotes == 0)
 			quotes = s[i];
 		if (s[i] == 39)
-			in++;
+			s_in++;
+		if (s_in == 2)
+		{
+			s_in = 0;
+			quotes = 0;
+		}
 		else if (s[i] == '$' && check_ifvalid(s[i + 1]))
 		{
 			dollar_sign = '$';
@@ -64,9 +69,11 @@ int	ft_search(char *s, t_env **env)
 				i++;
 			}
 			if ((quotes == 34 && dollar_sign == '$') || (dollar_sign == '$' && quotes == 0)
-				|| (dollar_sign == '$' && quotes == 39 && in == 2))
+				|| (dollar_sign == '$' && quotes == 39 && s_in == 2))
 			{
-				in = 0;
+				// printf("%d\n", s_in);
+				// exit(0);
+				s_in = 0;
 				get_var(s, start, i, env);
 				return (0);
 			}
@@ -106,25 +113,27 @@ char	*get_value(char **env, char *var)
 	return(var2);
 }
 
-void	get_envirement(t_tokens *token, char **env)
+void	get_envirement(t_command *cmd, char **env)
 {
 	t_env	*emt;
 	int		res;
+	int		i;
 
+	i = 0;
 	(void)env;
-	while (token)
+	while (cmd->arguments[i])
 	{
 		emt = NULL;
-		res = ft_search(token->content, &emt);
+		res = ft_searchfor_var(cmd->arguments[i], &emt);
 		if (emt)
 		{
 			if (emt->value[0] != '$')
 				emt->value = get_value(env, emt->value);
-			token->content = search_and_replace(token->content, emt->value, emt->index);
+			cmd->arguments[i] = s_and_r(cmd->arguments[i], emt->value, emt->index);
 			free(emt->value);
 			free(emt);
 		}
 		if (res == -1)
-			token = token->next;
+			i++;
 	}
 }

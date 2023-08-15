@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reomve_qoutes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 01:44:04 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/26 17:17:41 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/13 05:06:41 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,27 @@ char* remove_outer_quotes(char* str)
 	return (new_str);
 }
 
-void    remove_quotes(t_tokens *token)
+void    remove_quotes(t_command *cmd)
 {
-	while (token)
+	t_files	*file;
+	int		i;
+
+	file = cmd->files;
+	while (cmd)
 	{
-		token->content = remove_outer_quotes(token->content);
-		token = token->next;
+		i = 0;
+		if (cmd->command)
+			cmd->command = remove_outer_quotes(cmd->command);
+		while (file)
+		{
+			file->filename = remove_outer_quotes(file->filename);
+			file = file->next;
+		}
+		while (cmd->arguments[i])
+		{
+			cmd->arguments[i] = remove_outer_quotes(cmd->arguments[i]);
+			i++;
+		}
+		cmd = cmd->next;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/13 15:44:57 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/08/14 11:21:24 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <readline/readline.h>
+#include <readline/history.h>
 #include <string.h>
 #include <sys/types.h>
 #include <signal.h>
@@ -32,24 +33,13 @@ typedef struct s_args
 {
 	char				*args;
 	struct s_args		*next;
-}					t_args;
-
-typedef struct s_env_e {
-	char* key;
-	char* value;
-	struct s_env_e* next;
-} t_env_e;
-
-typedef struct cmd_nmbr
-{
-	int					cmd_num;
-}						t_cmd_nmbr;
+}						t_args;
 
 typedef struct s_command
 {
 	char				*command;
 	char				**arguments;
-	int					cmd_num;
+	// int					cmd_num;
 	int					infile;
 	int					outfile;
 	char				*cmd_path;
@@ -62,6 +52,7 @@ typedef struct s_files
 {
 	char				*filename;
 	int					red_type;
+	int					quote;
 	struct s_files		*next;
 }						t_files;
 
@@ -79,6 +70,18 @@ typedef struct s_tokens
 	struct s_tokens		*next;
 }						t_tokens;
 
+typedef struct s_env_e {
+	char* key;
+	char* value;
+	struct s_env_e* next;
+} t_env_e;
+
+
+// -------
+void					print_command(t_command *my_list);
+void					print_list(t_tokens *my_list);
+// -------
+void					set_signal();
 int						check_brakets(char *str);
 void					super_split(t_tokens **my_list, char *str);
 int						string_count(char *str);
@@ -93,37 +96,31 @@ char					*ft_strjoin(char *s1, char *s2);
 int						ft_strlen(const char *s);
 int						check_syntax_error(t_tokens  *token);
 int						ft_strcmp(const char *s1, const char *s2);
-void					add_command(t_command **command, char *content);
 void					add_args(t_args **args, char *content);
 void					add_files(t_files **files, char *content, char *rdac);
 int						in_qoute(char *token);
 void					add_var(t_env **env, char *content, int	num, int start);
-void					print_command(t_command *my_list);
 void					free_command(t_command *command);
-void					print_list(t_tokens *my_list);
 void					free_tokens(t_tokens *token);
-void					get_envirement(t_tokens *token, char **env);
+void					get_envirement(t_command *token, char **env);
+int						ft_searchfor_var(char *s, t_env **env);
+char					*get_value(char **env, char *var);
+char					*s_and_r(char *src, char *value, int index);
 int						is_redirections(char *token);
 int						check_ifvalid(char c);
 int						special_strlen(char	*env);
-char					*search_and_replace(char *src, char *value, int index);
-void					remove_quotes(t_tokens *token);
-void					_exec(t_command *command, char** env);
+void					remove_quotes(t_command *token);
+void					_exec(t_command *command, char	**env);
+void					redir_op(t_command *command, char **env);
+void					ft_herdoc(int fd, t_command *cmd, char **env);
 char					*findpath(char *cmd, char **envp);
-void					input_redir(t_command *command);
-void					output_redir(t_command *command);
-void					append_redir(t_command *command);
-void					redir_op(t_command *command);
-int						my_herdoc(int fd, char *filename);
-t_env_e*				parse_env(char** env);
-void 					print_env_ll(t_env_e* lst);
 
+// builtin
 int						echo_b(char **args);
 int						pwd_b(void);
 int 					cd_b(char** argv);
 int						exit_b();
 void					exec_builtins(t_command *command, char **env);
-int		is_builtin(char *arg);
-
-
+int						is_builtin(char *arg);
 #endif
+ 

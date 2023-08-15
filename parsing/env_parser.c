@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_parser.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 23:13:24 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/13 02:02:57 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/08/14 11:31:02 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ t_env_e* create_env_node() {
 	ret->value = NULL;
 	return ret;
 }
-
 
 t_env_e* parse_env(char** env) {
 	if (!env || !*env)

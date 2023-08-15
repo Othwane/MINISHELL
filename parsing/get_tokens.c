@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_tokens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 05:35:46 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/13 17:35:03 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/08/13 06:50:56 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ void	add_new(t_tokens **t_list, char *content)
 
 	newnode = malloc(sizeof(t_tokens));
 	newnode->content = ft_strdup(content);
-	if(in_qoute(content))
-		newnode->qoute = 1;
-	else
-		newnode->qoute = 0;
+	newnode->qoute = in_qoute(content);
 	newnode->next = NULL;
 	if (*t_list == NULL)
 		*t_list = newnode;
@@ -39,10 +36,12 @@ void	super_split(t_tokens **my_list, char *str)
 {
 	char *token;
 	int i;
+	int w;
 	int s_len;
 	int	len;
 
 	i = 0;
+	w = 0;
 	len = ft_strlen(str);
 	while(i <= len)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:40:49 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/12 04:44:27 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:14:17 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,17 @@ void	append_redir(t_command *command)
 	close(outfile_fd);
 }
 
-void	herdoc_redir(t_command *command)
+void	herdoc_redir(t_command *command, char	**env)
 {
-	int outfile_fd;
-
-	outfile_fd = open(command->files->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (outfile_fd < 0)
-	{
-		perror("Error opening output file");
-		exit(EXIT_FAILURE);
-	}
-	my_herdoc(outfile_fd, command->files->filename);
-	dup2(outfile_fd, 1);
-	close(outfile_fd);
+	int fd[2];
+	pipe(fd);
+	ft_herdoc(fd[1], command, env);
+	dup2(fd[0], 0);
+	close(fd[1]);
+	close(fd[0]);
 }
 
-void	redir_op(t_command *command)
+void	redir_op(t_command *command, char **env)
 {
 	while (command->files)
 	{
@@ -80,7 +75,7 @@ void	redir_op(t_command *command)
 		else if (command->files->red_type == APPEND)
 			append_redir(command);
 		else if (command->files->red_type == HERDOC)
-			herdoc_redir(command);
+			herdoc_redir(command, env);
 		command->files = command->files->next;
 	}
 }

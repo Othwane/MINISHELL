@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:54:03 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/11 18:31:49 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/08/14 11:45:46 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*ft_strdup(const char *s1)
 	char	*dup;
 
 	i = 0;
-	if (s1 == NULL)
+	if (s1 == NULL || ft_strlen(s1) == 0)
 		return (NULL);
 	s1_len = ft_strlen(s1);
 	dup = (char *) malloc(sizeof(char) * (s1_len + 1));
@@ -81,6 +81,8 @@ int	ft_strcmp(const char *s1, const char *s2)
 	x = 0;
 	i = 0;
 	total = 0;
+	if (!s1 || !s2)
+		return (1);
 	while ((s1[x] || s2[x]))
 	{
 		if (s1[i] != s2[x])
@@ -96,9 +98,11 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 char	*ft_strlcpy(char *dst, const char *src, int len)
 {
+	int	i;
 	int	j;
 
 	j = 0;
+	i = ft_strlen(src);
 	dst = malloc((len + 1) * sizeof(char));
 	while (j != len && src[j] != '\0')
 	{

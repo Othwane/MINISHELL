@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_command.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 06:41:05 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/09 03:43:14 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/13 06:49:49 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	add_command(t_command **command, char *content)
-{
-	t_command	*cmd;
-
-	cmd = *command;
-	cmd->cmd_num++;
-	cmd->command = ft_strdup(content);
-	cmd->next = NULL;
-}
 
 void	add_args(t_args **args, char *content)
 {
@@ -48,7 +38,8 @@ void	add_files(t_files **files, char *content, char *rdac)
 
 	newnode = malloc(sizeof(t_files));
 	newnode->filename = ft_strdup(content);
-	if (ft_strcmp(rdac, ">") == 0 || ft_strcmp(rdac, ">>") == 0)
+	newnode->quote = in_qoute(content);
+	if (ft_strcmp(rdac, ">") == 0)
 		newnode->red_type = OUTPUT;
 	else if (ft_strcmp(rdac, "<") == 0)
 		newnode->red_type = INPUT;
