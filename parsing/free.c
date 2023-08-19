@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 22:34:27 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/13 06:52:52 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/19 11:39:10 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,6 @@ void	print_command(t_command *my_list)
 	}
 }
 
-void	print_list(t_tokens *my_list)
-{
-	t_tokens	*node_head;
-	
-	node_head = my_list;
-	while(node_head)
-	{
-		printf("[%s]", node_head->content);
-		node_head = node_head->next;
-	}
-	printf("\n");
-}
 
 void	free_command(t_command *command)
 {
@@ -79,10 +67,9 @@ void	free_command(t_command *command)
 	}
 }
 
-void	free_tokens(t_tokens *token)
+void	free_resources(t_tokens *token)
 {
 	t_tokens	*tmp;
-
 	while(token)
 	{
 		tmp = token;
@@ -90,4 +77,14 @@ void	free_tokens(t_tokens *token)
 		free(tmp->content);
 		free(tmp);
 	}
+}
+
+void	free_env(void)
+{
+	int	i;
+
+	i = 0;
+	while (global.env[i])
+		free(global.env[i++]);
+	free(global.env);
 }

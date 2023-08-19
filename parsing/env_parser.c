@@ -6,46 +6,59 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 23:13:24 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/14 11:31:02 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/19 11:35:52 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_env_e* create_env_node() {
-	t_env_e* ret = malloc(sizeof(t_env_e));
-	ret->key = NULL;
-	ret->value = NULL;
-	return ret;
-}
+char	**fill_env(char **env)
+{
+	char    **new_env;
+	int i;
 
-t_env_e* parse_env(char** env) {
-	if (!env || !*env)
-		return NULL; // generate and return a dummy env
-	int i = 0;
-	t_env_e* ret = create_env_node();
-	t_env_e* tmp = ret;
-	while (env[i]) {
-		char** spl_tmp = ft_split(env[i], '=');
-		ret->key = spl_tmp[0];
-		ret->value = spl_tmp[1];
-		if (env[i + 1])
+	i = 0;
+	new_env = NULL;
+	if (env)
+	{
+		while (env[i])
+			i++;
+		new_env = malloc((i + 1) * sizeof(char*));
+		i = 0;
+		while (env[i])
 		{
-			ret->next = create_env_node();
-			ret = ret->next;
+			new_env[i] = ft_strdup(env[i]);		
+			i++;
 		}
-		i++;
 	}
-	return tmp;
+	new_env[i] = NULL;
+	return (new_env);
 }
 
-// char** join_env_lst(t_env_e* env_lst) {
-// 	return NULL;
-// }
+char    **add_newenv(char **env, char *new)
+{
+	char    **new_env;
+	int i;
 
-void print_env_ll(t_env_e* lst) {
-	while (lst) {
-		printf("lst key: %s | lst val: %s\n", lst->key, lst->value);
-		lst = lst->next;
+	i = 0;
+	new_env = NULL;
+	if (env)
+	{
+		while (env[i])
+			i++;
+		new_env = malloc((i + 2) * sizeof(char*));
+		i = 0;
+		while (env[i])
+		{
+			new_env[i] = ft_strdup(env[i]);		
+			i++;
+		}
+		new_env[i++] = ft_strdup(new);
 	}
+	new_env[i] = NULL;
+	i = 0;
+	while (env[i])
+		free(env[i++]);
+	free(env);
+	return (new_env);
 }

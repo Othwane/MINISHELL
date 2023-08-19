@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   getpath.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:05:27 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/08 01:28:35 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/17 19:12:10 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ char	*joinslash_cmd(char *envsplited, char *cmd)
 
 	slash = ft_strjoin(envsplited, "/");
 	command = ft_strjoin(slash, cmd);
-	free(slash);
-	free(envsplited);
+	// free(slash);
+	// free(envsplited);
 	return (command);
 }
 

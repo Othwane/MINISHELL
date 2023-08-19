@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 21:57:48 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/14 11:34:33 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/18 17:39:10 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void _exec(t_command *command, char **env)
 		}
 		if (is_builtin(command->command))
 		{
-			exec_builtins(command, env);
+			exec_builtins(command);
 			command = command->next;
 			continue;
 		}
@@ -79,7 +79,7 @@ void _exec(t_command *command, char **env)
 		// wait(&child_pid);
 		command = command->next;
 	}
-	wait(NULL);
+	while(wait(NULL) > 0);
 	remove_herdoc_file(files);
 }
 	// save the last command exit status, maybe return it

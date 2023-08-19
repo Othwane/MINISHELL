@@ -6,7 +6,7 @@
 #    By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/11 05:43:13 by aasselma          #+#    #+#              #
-#    Updated: 2023/08/14 12:15:59 by aasselma         ###   ########.fr        #
+#    Updated: 2023/08/19 10:30:46 by aasselma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,11 @@ NAME = minishell
 SRC =	minishell.c signals.c ./parsing/errors.c ./parsing/get_tokens.c ./parsing/count_token_len.c \
 		./parsing/libft_functions.c ./parsing/handel_syntax_error.c ./parsing/get_command.c \
 		./parsing/free.c ./parsing/get_variable.c ./parsing/utils.c ./parsing/search_and_replace.c \
-		./parsing/reomve_qoutes.c ./parsing/env_parser.c \
+		./parsing/reomve_qoutes.c ./parsing/env_parser.c ./parsing/search_for_var.c \
 		./execution/exec.c ./execution/getpath.c ./execution/exec_utils.c \
 		./execution/exec_redir.c ./execution/herdoc.c  \
-		./builtins/echo_b.c ./builtins/pwd_b.c ./builtins/builtins.c ./builtins/cd_b.c ./builtins/exit_b.c
+		./builtins/echo_b.c ./builtins/pwd_b.c ./builtins/builtins.c ./builtins/cd_b.c ./builtins/exit_b.c \
+		./builtins/export_b.c ./builtins/env_b.c
 
 OBJ	= $(SRC:%.c=%.o)
 

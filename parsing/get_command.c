@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 06:41:05 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/13 06:49:49 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/18 08:51:32 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,25 +59,14 @@ void	add_files(t_files **files, char *content, char *rdac)
 	}
 }
 
-void	add_var(t_env **env, char *content, int	num, int start)
+void	add_var(t_env **env, char *content, int	s_p, int e_p)
 {
 	t_env	*newnode;
-	t_env	*tmp;
 
 	newnode = malloc(sizeof(t_env));
-	newnode->index = (start - 1);
-	if (num > 0)
-		newnode->value = ft_strdup(content);
-	else
-		newnode->value = NULL;
+	newnode->s_p = (s_p - 1);
+	newnode->e_p = (e_p);
+	newnode->value = ft_strdup(content);
 	newnode->next = NULL;
-	if (*env == NULL)
-		*env = newnode;
-	else
-	{
-		tmp = *env;
-		while(tmp->next)
-			tmp = tmp->next;
-		tmp->next = newnode;
-	}
+	*env = newnode;
 }

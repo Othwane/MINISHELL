@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/14 11:21:24 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/19 11:46:48 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@
 #define OUTPUT 2
 #define APPEND 4
 #define HERDOC 3
+
+typedef struct s_global
+{
+	char				**env;
+	int					exit_s;
+}						t_global;
+
+t_global	global;
 
 typedef struct s_args
 {
@@ -59,7 +67,8 @@ typedef struct s_files
 typedef struct s_env
 {
 	char				*value;
-	int					index;
+	int					s_p;
+	int					e_p;
 	struct s_env		*next;
 }						t_env;
 
@@ -70,7 +79,8 @@ typedef struct s_tokens
 	struct s_tokens		*next;
 }						t_tokens;
 
-typedef struct s_env_e {
+typedef struct s_env_e
+{
 	char* key;
 	char* value;
 	struct s_env_e* next;
@@ -101,11 +111,14 @@ void					add_files(t_files **files, char *content, char *rdac);
 int						in_qoute(char *token);
 void					add_var(t_env **env, char *content, int	num, int start);
 void					free_command(t_command *command);
-void					free_tokens(t_tokens *token);
+void					free_resources(t_tokens *token);
 void					get_envirement(t_command *token, char **env);
+char					*remove_special_char(char *str);
+int						check_quote(char *var);
+int						get_next_var(char *var);
 int						ft_searchfor_var(char *s, t_env **env);
 char					*get_value(char **env, char *var);
-char					*s_and_r(char *src, char *value, int index);
+char					*s_and_r(char *src, char *value, int index, int l);
 int						is_redirections(char *token);
 int						check_ifvalid(char c);
 int						special_strlen(char	*env);
@@ -116,11 +129,16 @@ void					ft_herdoc(int fd, t_command *cmd, char **env);
 char					*findpath(char *cmd, char **envp);
 
 // builtin
+void					free_env();
+char					**fill_env(char **env);
+void					env_b(char *str);
+void					export_b(t_command *cmd);
+char					**add_newenv(char **env, char *new);
 int						echo_b(char **args);
 int						pwd_b(void);
 int 					cd_b(char** argv);
 int						exit_b();
-void					exec_builtins(t_command *command, char **env);
+void					exec_builtins(t_command *command);
 int						is_builtin(char *arg);
 #endif
  

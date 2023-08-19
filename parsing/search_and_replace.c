@@ -6,67 +6,38 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 10:17:40 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/13 03:48:22 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/18 08:54:43 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	count_tokenlen(char *str)
-{
-	int	i;
-	int	len;
-	int q;
-
-	q = 0;
-	i = 0;
-	len = 0;
-	while(str[i])
-	{
-		if (str[i] == '$' && q == 0)
-		{
-			i++;
-			q++;
-			while (check_ifvalid(str[i]))
-				i++;
-		}
-		else
-		{
-			i++;
-			len++;
-		}
-	}
-	return (len);
-}
-
-char	*s_and_r(char *src, char *value, int index)
+char	*s_and_r(char *src, char *value, int index, int l)
 {
 	char    *token;
-	int     i;
-	int     j;
-	int		k;
+	char    *last_p;
 	int     len;
-	
+	int		i;
+	int		j;
+
 	i = 0;
 	j = 0;
-	k = 0;
-	len = count_tokenlen(src) + ft_strlen(value);
-	token = malloc(sizeof(char) * (len + 1));
+	len = (ft_strlen(src) + ft_strlen(value)) - l;
+	last_p = ft_strdup(&src[index + (l + 1)]);
+	token = malloc((len + 1) * sizeof(char));
 	while(i != len)
 	{
 		if (i == index)
 		{
-			j++;
-			while(check_ifvalid(src[j]))
-				j++;
-			if (value)
-				while(value[k])
-					token[i++] = value[k++];
+			token[i] = '\0';
+			token = ft_strjoin(token, value);
+			token = ft_strjoin(token, last_p);
+			break ;
 		}
 		if (i < len)
 			token[i++] = src[j++];
 	}
-	token[len] = '\0';
 	free(src);
+	free(last_p);
 	return (token);
 }

@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 12:04:37 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/13 16:36:41 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/18 07:18:42 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	nonexpandherdoc(int fd, char *filename)
 		newinput = ft_strjoin(input, "\n");
 		write(fd, newinput, ft_strlen(newinput));
 		free(newinput);
-		free(input);
+		// free(input);
 	}
 }
 
@@ -36,6 +36,7 @@ char	*expand_input(char *input, char **env)
 {
 	t_env	*emt;
 	int		res;
+	int		len;
 
 	while (1)
 	{
@@ -43,9 +44,10 @@ char	*expand_input(char *input, char **env)
 		res = ft_searchfor_var(input, &emt);
 		if (emt)
 		{
+			len = ft_strlen(emt->value);
 			if (emt->value[0] != '$')
 				emt->value = get_value(env, emt->value);
-			input = s_and_r(input, emt->value, emt->index);
+			input = s_and_r(input, emt->value, emt->s_p, len);
 			free(emt->value);
 			free(emt);
 		}
@@ -72,7 +74,7 @@ void    expand_herdoc(int fd, char *filename, char **env)
 		newinput = ft_strjoin(input, "\n");
 		write(fd, newinput, ft_strlen(newinput));
 		free(newinput);
-		free(input);
+		// free(input);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/13 18:16:30 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/19 11:59:21 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ int main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
+	global.env = fill_env(env);
 	while (1)
 	{
 		set_signal();
@@ -143,7 +144,6 @@ int main(int ac, char **av, char **env)
 			node_head = NULL;
 			command = malloc(sizeof(t_command));
 			command->next = NULL;
-			// command->cmd_num = 0;
 			command->command = NULL;
 			command->arguments = NULL;
 			command->files = NULL;
@@ -161,13 +161,14 @@ int main(int ac, char **av, char **env)
 			{
 				parsing(node_head, &command);
 				convert_linkedlist(command, command->args);
-				get_envirement(command, env);
+				get_envirement(command, global.env);
 				remove_quotes(command);
-				_exec(command, env);
+				_exec(command, global.env);
 				free_command(command);
 			}
-			free_tokens(node_head);
+			free_resources(node_head);
 		}
 		free(input);
 	}
+	free_env();
 }

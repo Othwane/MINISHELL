@@ -6,82 +6,131 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:21:22 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/14 15:54:33 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/19 10:28:03 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	get_var(char *str, int f, int l, t_env **env)
+int	is_valid(char c, int sign)
 {
-	char	*var;
-	int		len;
-	int		i;
-	int		start;
+	if ((c >= '0' && c <= '9') || c == '_')
+		return (1);
+	if (c >= 65 && c <= 90)
+		return (1);
+	if (c >= 97 && c <= 122)
+		return (1);
+	else if (sign == 0 && (c == '?'|| c == '$'))
+		return (1);
+	return (0);
+}
 
-	l++;
-	len = (l - f);
+char	*copy_name(char *var, int sign)
+{
+	char	*var_name;
+	int		i;
+	int		j;
+
 	i = 0;
-	start = f;
-	var = malloc((len + 1) * sizeof(char));
-	while(f != l)
+	j = 0;
+	if (sign == 1)
 	{
-		var[i] = str[f];
-		f++;
+		var_name = malloc(2 * sizeof(char));
+		var_name[0] = var[0];
+		var_name[1] = '\0';
+	}
+	else
+	{
+		var_name = malloc((ft_strlen(var) + 1) * sizeof(char));
+		while (is_valid(var[i], 1) == 1)
+			var_name[j++] = var[i++];
+		var_name[j] = '\0';	
+	}
+	return (var_name);
+}
+
+char	*get_varname(char *var)
+{
+	int		i;
+	int		j;
+	char	*varname;
+
+	i = 0;
+	j = 0;
+	varname = NULL;
+	while (var[i])
+	{
+		if (var[i] == '$'
+			&& !(var[i + 1] == 32 || (var[i + 1] <= 9 && var[i + 1] >= 13)))
+		{
+			if ((var[++i] == '?' || var[i] == '$') || (var[i] >= '0' && var[i] <= '9'))
+				varname = copy_name(&var[i], 1);
+			else if (!((var[i] >= 97 && var[i] <= 122) || (var[i] >= 65 && var[i] <= 90)))
+				varname = copy_name(&var[i], 1);
+			else
+				varname = copy_name(&var[i], 0);
+			break;
+		}
 		i++;
 	}
-	var[i] = '\0';
-	add_var(env, var, ft_strlen(var), start);
-	free(var);
+	return (varname);
+}
+
+void	get_var_pos(char *s, char *v, int *start_pos, int *end_pos)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	if (v == NULL)
+		return ;
+	while(s[i++])
+	{
+		if (s[i] == v[j])
+		{
+			*start_pos = i;
+			while (v[j] != '\0')
+				if (v[j++] != s[i++])
+					break;
+			if (j == ft_strlen(v))
+			{
+				*end_pos = i;
+				break ;
+			}
+			else
+				j = 0;
+		}
+	}
 }
 
 int	ft_searchfor_var(char *s, t_env **env)
 {
-	int		i;
-	int		start;	
-	char	quotes;
-	char	dollar_sign;
-	int		s_in;
+	int		quotes;
+	int		index;
+	int		start_pos;
+	int		end_pos;
+	char	*var;
 
-	i = 0;
-	quotes = 0;
-	dollar_sign = 0;
-	s_in = 0;
-	while (s[i] != '\0')
+	index = 0;
+	start_pos = 0;
+	end_pos = 0;
+	while (1)
 	{
-		if ((s[i] == 34 || s[i] == 39) && quotes == 0)
-			quotes = s[i];
-		if (s[i] == 39)
-			s_in++;
-		if (s_in == 2)
+		quotes = check_quote(&s[index]);
+		if (quotes == -1)
+			return (-1);
+		else if (quotes == 34 || quotes == 0)
 		{
-			s_in = 0;
-			quotes = 0;
+			var = get_varname(&s[index]);
+			get_var_pos(s, var, &start_pos, &end_pos);
+			add_var(env, var, start_pos, end_pos);
+			free(var);
+			break ;
 		}
-		else if (s[i] == '$' && check_ifvalid(s[i + 1]))
-		{
-			dollar_sign = '$';
-			start = (++i);
-			while (check_ifvalid(s[i + 1]))
-			{
-				if (s[i] >= '0' && s[i] <= '9')
-					break;
-				i++;
-			}
-			if ((quotes == 34 && dollar_sign == '$') || (dollar_sign == '$' && quotes == 0)
-				|| (dollar_sign == '$' && quotes == 39 && s_in == 2))
-			{
-				// printf("%d\n", s_in);
-				// exit(0);
-				s_in = 0;
-				get_var(s, start, i, env);
-				return (0);
-			}
-		}
-		i++;
+		else
+			index = get_next_var(&s[index]);
 	}
-	if (!(quotes == 34 && dollar_sign == '$') || !(dollar_sign == '$' && quotes == 0))
-		return (-1);
 	return (0);
 }
 
@@ -118,18 +167,20 @@ void	get_envirement(t_command *cmd, char **env)
 	t_env	*emt;
 	int		res;
 	int		i;
+	int		len;
 
 	i = 0;
 	(void)env;
+	res = 0;
 	while (cmd->arguments[i])
 	{
 		emt = NULL;
 		res = ft_searchfor_var(cmd->arguments[i], &emt);
 		if (emt)
 		{
-			if (emt->value[0] != '$')
-				emt->value = get_value(env, emt->value);
-			cmd->arguments[i] = s_and_r(cmd->arguments[i], emt->value, emt->index);
+			len = ft_strlen(emt->value);
+			emt->value = get_value(env, emt->value);
+			cmd->arguments[i] = s_and_r(cmd->arguments[i], emt->value, emt->s_p, len);
 			free(emt->value);
 			free(emt);
 		}
