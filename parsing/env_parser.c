@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 23:13:24 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/19 11:35:52 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/20 01:08:51 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,3 +62,4 @@ char    **add_newenv(char **env, char *new)
 	free(env);
 	return (new_env);
 }
+

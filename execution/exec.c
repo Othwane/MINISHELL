@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 21:57:48 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/18 17:39:10 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/20 03:47:42 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@ void _exec(t_command *command, char **env)
 		{
 			exec_builtins(command);
 			command = command->next;
-			continue;
 		}
+		else
+		{
 		signal(SIGINT, SIG_IGN);
 		int child_pid = fork();
 		if (child_pid == 0)
@@ -68,6 +69,7 @@ void _exec(t_command *command, char **env)
 					execve(command->cmd_path, command->arguments, env);
 			}
 			exit(1);
+		}
 		}
 		if (command->outfile != 1)
 			close(command->outfile);

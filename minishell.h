@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/19 11:46:48 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/19 23:28:20 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 typedef struct s_global
 {
 	char				**env;
+	char				**export;
 	int					exit_s;
 }						t_global;
 
@@ -47,7 +48,6 @@ typedef struct s_command
 {
 	char				*command;
 	char				**arguments;
-	// int					cmd_num;
 	int					infile;
 	int					outfile;
 	char				*cmd_path;
@@ -131,9 +131,13 @@ char					*findpath(char *cmd, char **envp);
 // builtin
 void					free_env();
 char					**fill_env(char **env);
-void					env_b(char *str);
+void					env_b(char **export);
 void					export_b(t_command *cmd);
 char					**add_newenv(char **env, char *new);
+void					unsetenv_b(char **args);
+int						check_nameof_var(char *var_name);
+int						get_pos(char *var);
+int						env_len(char **env);
 int						echo_b(char **args);
 int						pwd_b(void);
 int 					cd_b(char** argv);
@@ -141,4 +145,3 @@ int						exit_b();
 void					exec_builtins(t_command *command);
 int						is_builtin(char *arg);
 #endif
- 

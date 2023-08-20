@@ -6,30 +6,94 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 23:13:35 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/19 13:15:40 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/20 03:45:34 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	check_nameof_var(char *var_name)
+int	ft_function(char *v_n, char *value, int index)
 {
+	char	*env_var;
+	char	*env_val;
+	int		len;
+	int		p;
+
+	p = get_pos(global.env[index]);
+	len = ft_strlen(global.env[index]) - (p);
+	env_var = ft_strlcpy("", global.env[index], p);
+	env_val = ft_strlcpy("", &global.env[index][p], len);
+	if (ft_strcmp(env_var, v_n) == 0)
+	{
+		if (ft_strcmp(env_val, value) != 0)
+		{
+			global.env[index] = ft_strjoin(ft_strdup(env_var), value);
+			free(env_var);
+			free(env_val);
+			return (1);
+		}
+	}
+	free(env_var);
+	free(env_val);
+	return (3);
+}
+
+int	is_exist(char *var, int p)
+{
+	char	*varname;
+	char	*value;
 	int	i;
+	int	res;
 
 	i = 0;
-	while (var_name[i])
+	res = 0;
+	varname = ft_strlcpy("", var, p);
+	value = ft_strlcpy("", &var[p], ft_strlen(var) - (i));
+	while(global.env[i])
 	{
-		if (i == 0 && (var_name[i] >= '0' && var_name[i] <= '9'))
+		if (ft_function(varname, value, i) == 3)
+			res = 3;
+		else
 			return (1);
-		if (!(var_name[i] >= '0' && var_name[i] <= '9')
-				&& !(var_name[i] >= 65 && var_name[i] <= 90)
-				&& !(var_name[i] >= 97 && var_name[i] <= 122)
-				&& !((var_name[i] == '_') || (var_name[i] == '=')))
-				return (1);
 		i++;
 	}
-	return (0);
+	free(varname);
+	return (res);
 }
+void	add_to_env(char *var)
+{
+	int		i;
+
+	i = 0;
+	while(var[i])
+	{
+		if (var[i] == '=')
+		{
+			if (is_exist(var, i) == 3)
+				global.env = add_newenv(global.env, var);
+		}
+		i++;
+	}
+}
+
+// void	add_to_export(char *newvar)
+// {
+// 	char	*varname;
+// 	char	*value;
+// 	int	i;
+// 	int	p;
+
+// 	i = 0;
+// 	p = 0;
+// 	varname = ft_strlcpy("", newvar, p);
+// 	value = ft_strlcpy("", &newvar[p], ft_strlen(newvar) - (i));
+// 	if (check_ifexist(newvar) == 0)
+// 	{
+// 		if (check_value() == 1)
+// 			global.export = add_newenv(global.export, newvar);
+		
+// 	}
+// }
 
 void	export_b(t_command *cmd)
 {
@@ -48,10 +112,13 @@ void	export_b(t_command *cmd)
 		}
 		else
 		{
-			global.env = add_newenv(global.env, cmd->arguments[i]);
+			// add_to_export(cmd->arguments[i]);
+			add_to_env(cmd->arguments[i]);
+			global.exit_s = EXIT_SUCCESS;
 			i++;
 		}
 	}
 	if (cmd->arguments[1] == NULL)
-		env_b("declare -x ");
+		env_b(global.export);
+	global.exit_s = EXIT_SUCCESS;
 }

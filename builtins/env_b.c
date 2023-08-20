@@ -6,18 +6,26 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 23:13:29 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/19 11:33:15 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/19 15:58:52 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	env_b(char *str)
+void	env_b(char **export)
 {
 	int i;
 
 	i = 0;
-	while (global.env[i])
-		printf("%s%s\n", str, global.env[i++]);
+	if (export == NULL)
+	{
+		while (global.env[i])
+			printf("%s\n", global.env[i++]);
+	}
+	else
+	{
+		while (global.export[i])
+			printf("declare -x %s\n", global.export[i++]);
+	}
 	global.exit_s = EXIT_SUCCESS;
 }

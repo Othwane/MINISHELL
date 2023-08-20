@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/19 11:59:21 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/19 16:05:30 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ int main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	global.env = fill_env(env);
+	global.export = fill_env(env);
 	while (1)
 	{
 		set_signal();
