@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:22:03 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/19 19:52:54 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/21 15:52:01 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ int		is_builtin(char *arg)
 
 void	exec_builtins(t_command *command)
 {
+	int	i;
+
+	i = 1;
 	if(ft_strcmp(command->arguments[0], "echo") == 0)
 		echo_b(command->arguments);
 	else if (ft_strcmp(command->arguments[0], "cd") == 0)
@@ -37,7 +40,10 @@ void	exec_builtins(t_command *command)
 	else if (ft_strcmp(command->arguments[0], "export") == 0)
 		export_b(command);
 	else if (ft_strcmp(command->arguments[0], "unset") == 0)
-		unsetenv_b(command->arguments);
+	{
+		while (command->arguments[i])
+			unsetenv_b(command->arguments[i++]);	
+	}
 	else if (ft_strcmp(command->arguments[0], "env") == 0)
 		env_b(NULL);
 	else if (ft_strcmp(command->arguments[0], "exit") == 0)

@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 23:13:35 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/20 03:45:34 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/21 20:05:06 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	ft_function(char *v_n, char *value, int index)
 			free(env_val);
 			return (1);
 		}
+		else
+			return (0);
 	}
 	free(env_var);
 	free(env_val);
@@ -49,6 +51,8 @@ int	is_exist(char *var, int p)
 	res = 0;
 	varname = ft_strlcpy("", var, p);
 	value = ft_strlcpy("", &var[p], ft_strlen(var) - (i));
+	if (global.env[0] == NULL)
+		return (3);
 	while(global.env[i])
 	{
 		if (ft_function(varname, value, i) == 3)
@@ -76,24 +80,28 @@ void	add_to_env(char *var)
 	}
 }
 
-// void	add_to_export(char *newvar)
-// {
-// 	char	*varname;
-// 	char	*value;
-// 	int	i;
-// 	int	p;
+void	add_to_export(char *newvar)
+{
+	char	*varname;
+	char	*value;
+	int	i;
+	int	p;
 
-// 	i = 0;
-// 	p = 0;
-// 	varname = ft_strlcpy("", newvar, p);
-// 	value = ft_strlcpy("", &newvar[p], ft_strlen(newvar) - (i));
-// 	if (check_ifexist(newvar) == 0)
-// 	{
-// 		if (check_value() == 1)
-// 			global.export = add_newenv(global.export, newvar);
-		
-// 	}
-// }
+	i = 0;
+	p = get_pos(newvar);
+	if (p == ft_strlen(newvar))
+	{
+		if (check_ifexist(newvar) == 0)
+			global.export = add_newenv(global.export, newvar);
+	}
+	else
+	{
+		varname = ft_strlcpy("", newvar, p);
+		value = ft_strlcpy("", &newvar[p], ft_strlen(newvar) - (i));
+		if (ft_var_checker(varname, value, i) == 3)
+			global.export = add_newenv(global.export, newvar);
+	}
+}
 
 void	export_b(t_command *cmd)
 {
@@ -112,13 +120,11 @@ void	export_b(t_command *cmd)
 		}
 		else
 		{
-			// add_to_export(cmd->arguments[i]);
+			add_to_export(cmd->arguments[i]);
 			add_to_env(cmd->arguments[i]);
-			global.exit_s = EXIT_SUCCESS;
 			i++;
 		}
 	}
 	if (cmd->arguments[1] == NULL)
 		env_b(global.export);
-	global.exit_s = EXIT_SUCCESS;
 }

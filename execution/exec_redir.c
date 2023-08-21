@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:40:49 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/14 12:14:17 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/21 15:43:45 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	output_redir(t_command *command)
 	outfile_fd = open(command->files->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (outfile_fd < 0)
 	{
-		perror("Error opening output file");
+		perror("minishell:");
 		exit(EXIT_FAILURE);
 	}
 	dup2(outfile_fd, 1);
@@ -47,7 +47,7 @@ void	append_redir(t_command *command)
 	outfile_fd = open(command->files->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (outfile_fd < 0)
 	{
-		perror("Error opening output file");
+		perror("minishell:");
 		exit(EXIT_FAILURE);
 	}
 	dup2(outfile_fd, 1);

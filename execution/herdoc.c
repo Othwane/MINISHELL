@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 12:04:37 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/18 07:18:42 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/20 16:57:23 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	nonexpandherdoc(int fd, char *filename)
 		newinput = ft_strjoin(input, "\n");
 		write(fd, newinput, ft_strlen(newinput));
 		free(newinput);
-		// free(input);
 	}
 }
 
@@ -74,7 +73,6 @@ void    expand_herdoc(int fd, char *filename, char **env)
 		newinput = ft_strjoin(input, "\n");
 		write(fd, newinput, ft_strlen(newinput));
 		free(newinput);
-		// free(input);
 	}
 }
 

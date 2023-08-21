@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/19 16:05:30 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/21 18:47:05 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,8 @@ int main(int ac, char **av, char **env)
 	(void)av;
 	global.env = fill_env(env);
 	global.export = fill_env(env);
+	global.fdin = dup(0);
+	global.fdout = dup(1);
 	while (1)
 	{
 		set_signal();
@@ -155,7 +157,8 @@ int main(int ac, char **av, char **env)
 			super_split(&node_head ,input);
 			if (check_syntax_error(node_head) == 1 || check_brakets(input) == 1)
 			{
-				printf("minishell~: syntax error near unexpected token\n");
+				write(2, "minishell: syntax error\n", 25);
+				global.exit_s = 258;
 				free(command);
 			}
 			else

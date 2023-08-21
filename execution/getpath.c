@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:05:27 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/19 23:42:46 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/21 18:29:14 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ char	*joinslash_cmd(char *envsplited, char *cmd)
 
 	slash = ft_strjoin(envsplited, "/");
 	command = ft_strjoin(slash, cmd);
-	// free(slash);
-	// free(envsplited);
 	return (command);
 }
 

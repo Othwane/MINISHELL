@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:21:22 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/19 10:28:03 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/21 19:02:10 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ char	*get_varname(char *var)
 	varname = NULL;
 	while (var[i])
 	{
-		if (var[i] == '$'
-			&& !(var[i + 1] == 32 || (var[i + 1] <= 9 && var[i + 1] >= 13)))
+		if (var[i] == '$' && next_isvalid(var[i + 1]))
 		{
 			if ((var[++i] == '?' || var[i] == '$') || (var[i] >= '0' && var[i] <= '9'))
 				varname = copy_name(&var[i], 1);
@@ -123,9 +122,14 @@ int	ft_searchfor_var(char *s, t_env **env)
 		else if (quotes == 34 || quotes == 0)
 		{
 			var = get_varname(&s[index]);
-			get_var_pos(s, var, &start_pos, &end_pos);
-			add_var(env, var, start_pos, end_pos);
-			free(var);
+			if (var != NULL)
+			{
+				get_var_pos(s, var, &start_pos, &end_pos);
+				add_var(env, var, start_pos, end_pos);
+				free(var);
+			}
+			else
+				index++;
 			break ;
 		}
 		else
@@ -170,11 +174,12 @@ void	get_envirement(t_command *cmd, char **env)
 	int		len;
 
 	i = 0;
-	(void)env;
 	res = 0;
 	while (cmd->arguments[i])
 	{
 		emt = NULL;
+		if (cmd->arguments[i][0])
+			cmd->arguments[i] = remove_dollarsign(cmd->arguments[i]);
 		res = ft_searchfor_var(cmd->arguments[i], &emt);
 		if (emt)
 		{

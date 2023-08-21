@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 08:22:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/18 15:09:30 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/21 13:49:56 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,15 @@ int	ft_checker(int *quote, int *d_sign, int *q_num)
 	return (0);
 }
 
+int	next_isvalid(char c)
+{
+	if(c == '\0' || c == 34 || c == 39)
+		return (0);
+	else if ((c == 32 || (c <= 9 && c >= 13)))
+		return (0);
+	return (1);
+}
+
 int	check_quote(char *var)
 {
 	int		i;
@@ -38,7 +47,7 @@ int	check_quote(char *var)
 	i = 0;
 	while (var[i])
 	{
-		if (var[i] == '$')
+		if (var[i] == '$' && next_isvalid(var[i + 1]))
 			d_sign = '$';
 		if ((var[i] == 34 || var[i] == 39) && q_num != 2)
 		{

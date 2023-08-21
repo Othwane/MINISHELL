@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_b.c                                             :+:      :+:    :+:   */
+/*   print_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/12 23:13:15 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/21 16:18:51 by aasselma         ###   ########.fr       */
+/*   Created: 2023/08/20 20:01:56 by aasselma          #+#    #+#             */
+/*   Updated: 2023/08/20 20:40:46 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
-int cd_b(char** argv) {
-	if (!argv)
-		return 1;
-	if (!argv[1]) {
-		chdir(getenv("HOME"));
-	}
-	else {
-		if (chdir(argv[1]) == -1)
+void	display_error(char  *error, char *str, char c)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (error[i])
+	{
+		write(2, &error[i], 1);
+		if (error[i] == c && str != NULL)
 		{
-			write(2, "minishell: cd: ", 15);
-			write(2, argv[1], ft_strlen(argv[1]));
-			write(2, ": No such file or directory\n", 29);
-			return 1;
+			while (str[j])
+				write(2, &str[j++], 1);
 		}
+		i++;
 	}
-	return 0;
+	global.exit_s = EXIT_FAILURE;
 }

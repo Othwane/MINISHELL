@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/19 23:28:20 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/21 17:09:03 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 
 typedef struct s_global
 {
+	int					fdout;
+	int					fdin;
 	char				**env;
 	char				**export;
 	int					exit_s;
@@ -91,6 +93,7 @@ typedef struct s_env_e
 void					print_command(t_command *my_list);
 void					print_list(t_tokens *my_list);
 // -------
+void					display_error(char  *error, char *str, char c);
 void					set_signal();
 int						check_brakets(char *str);
 void					super_split(t_tokens **my_list, char *str);
@@ -113,8 +116,10 @@ void					add_var(t_env **env, char *content, int	num, int start);
 void					free_command(t_command *command);
 void					free_resources(t_tokens *token);
 void					get_envirement(t_command *token, char **env);
+char					*remove_dollarsign(char *arg);
 char					*remove_special_char(char *str);
 int						check_quote(char *var);
+int						next_isvalid(char c);
 int						get_next_var(char *var);
 int						ft_searchfor_var(char *s, t_env **env);
 char					*get_value(char **env, char *var);
@@ -134,8 +139,10 @@ char					**fill_env(char **env);
 void					env_b(char **export);
 void					export_b(t_command *cmd);
 char					**add_newenv(char **env, char *new);
-void					unsetenv_b(char **args);
+void					unsetenv_b(char *args);
 int						check_nameof_var(char *var_name);
+int						check_ifexist(char *var);
+int						ft_var_checker(char *v_n, char *value, int index);
 int						get_pos(char *var);
 int						env_len(char **env);
 int						echo_b(char **args);
