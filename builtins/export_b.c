@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 23:13:35 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/21 20:05:06 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/21 20:48:30 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	export_b(t_command *cmd)
 			write(2, "~minishell$>: export: `", 23);
 			write(2, cmd->arguments[i], ft_strlen(cmd->arguments[i]));
 			write(2, "': not a valid identifier\n", 26);
-			global.exit_s = EXIT_FAILURE;
+			*global.exit_s = EXIT_FAILURE;
 			i++;
 		}
 		else

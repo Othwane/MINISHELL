@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:21:22 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/21 19:02:10 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/21 20:48:53 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,10 @@ void	get_envirement(t_command *cmd, char **env)
 		if (emt)
 		{
 			len = ft_strlen(emt->value);
-			emt->value = get_value(env, emt->value);
+			if (emt->value[0] == '?')
+				emt->value = ft_itoa(*global.exit_s);
+			else
+				emt->value = get_value(env, emt->value);
 			cmd->arguments[i] = s_and_r(cmd->arguments[i], emt->value, emt->s_p, len);
 			free(emt->value);
 			free(emt);

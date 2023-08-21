@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 21:57:48 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/21 16:50:50 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/21 20:56:38 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	remove_herdoc_file(t_files *file)
 void _exec(t_command *command, char **env)
 {
 	t_files	*files;
+	int		status;
 	int pipefd[2];
 
 	files = command->files;
@@ -65,11 +66,14 @@ void _exec(t_command *command, char **env)
 				if (command->command != NULL)
 				{
 					if ((access(command->cmd_path, F_OK)))
+					{
 						write(2, "minishell: command not found\n", 29);
+						*global.exit_s = 127;
+					}
 					else
 						execve(command->cmd_path, command->arguments, env);
 				}
-				exit(1);
+				exit(*global.exit_s);
 			}
 		}
 		if (command && command->outfile != 1)
@@ -85,7 +89,8 @@ void _exec(t_command *command, char **env)
 	}
 	dup2(global.fdin, 0);
 	dup2(global.fdout, 1);
-	while(wait(NULL) > 0);
+	while(wait(&status) > 0)
+		*global.exit_s = status >> 8;
 	remove_herdoc_file(files);
 }
 // save the last command exit status, maybe return it

@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/21 17:09:03 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/21 20:47:36 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_global
 	int					fdin;
 	char				**env;
 	char				**export;
-	int					exit_s;
+	int					*exit_s;
 }						t_global;
 
 t_global	global;
@@ -91,9 +91,9 @@ typedef struct s_env_e
 
 // -------
 void					print_command(t_command *my_list);
-void					print_list(t_tokens *my_list);
 // -------
 void					display_error(char  *error, char *str, char c);
+char					*ft_itoa(int n);
 void					set_signal();
 int						check_brakets(char *str);
 void					super_split(t_tokens **my_list, char *str);

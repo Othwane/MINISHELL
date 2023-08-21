@@ -6,13 +6,13 @@
 #    By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/11 05:43:13 by aasselma          #+#    #+#              #
-#    Updated: 2023/08/21 17:42:43 by aasselma         ###   ########.fr        #
+#    Updated: 2023/08/21 20:41:06 by aasselma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC =	minishell.c signals.c print_errors.c ./parsing/errors.c \
+SRC =	minishell.c signals.c print_errors.c ft_itoa.c ./parsing/errors.c \
 		./parsing/get_tokens.c ./parsing/count_token_len.c \
 		./parsing/libft_functions.c ./parsing/handel_syntax_error.c \
 		./parsing/get_command.c ./parsing/free.c ./parsing/get_variable.c \
