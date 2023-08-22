@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 21:57:48 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/21 20:56:38 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/22 03:28:30 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,12 @@ void _exec(t_command *command, char **env)
 {
 	t_files	*files;
 	int		status;
+	int 	var = 0;
 	int pipefd[2];
 
 	files = command->files;
+	if (command && is_builtin(command->command) && command->next)
+		var = 1;
 	while (command)
 	{
 		if (!command->arguments)
@@ -38,11 +41,22 @@ void _exec(t_command *command, char **env)
 			pipe(pipefd);
 			command->outfile = pipefd[1];
 		}
-		if (is_builtin(command->command))
+		if (is_builtin(command->command) && !var)
 		{
 			redir_op(command, env);
 			exec_builtins(command);
 			command = command->next;
+		}
+		else if (is_builtin(command->command) && var)
+		{
+			if (fork() == 0)
+			{
+				redir_op(command, env);
+				exec_builtins(command);
+				command = command->next;
+				exit(0);
+			}
+			wait(0);
 		}
 		else
 		{

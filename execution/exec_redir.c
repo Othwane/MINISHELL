@@ -6,52 +6,55 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:40:49 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/21 15:43:45 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/22 04:12:01 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	input_redir(t_command *command)
+int	input_redir(t_command *command)
 {
 	int infile_fd;
 
 	infile_fd = open(command->files->filename, O_RDONLY);
 	if (infile_fd < 0)
 	{
-		perror("Error opening input file");
-		exit(EXIT_FAILURE);
+		write(2, "minishell: No such file or directory\n", 37);
+		return (1);
 	}
 	dup2(infile_fd, 0);
 	close(infile_fd);
+	return (0);
 }
 
-void	output_redir(t_command *command)
+int	output_redir(t_command *command)
 {
 	int outfile_fd;
 
 	outfile_fd = open(command->files->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (outfile_fd < 0)
 	{
-		perror("minishell:");
-		exit(EXIT_FAILURE);
+		write(2, "minishell: No such file or directory\n", 37);
+		return (1);
 	}
 	dup2(outfile_fd, 1);
 	close(outfile_fd);
+	return (0);
 }
 
-void	append_redir(t_command *command)
+int	append_redir(t_command *command)
 {
 	int outfile_fd;
 
 	outfile_fd = open(command->files->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (outfile_fd < 0)
 	{
-		perror("minishell:");
-		exit(EXIT_FAILURE);
+		write(2, "minishell: No such file or directory\n", 37);
+		return (1);
 	}
 	dup2(outfile_fd, 1);
 	close(outfile_fd);
+	return (0);
 }
 
 void	herdoc_redir(t_command *command, char	**env)
@@ -69,13 +72,15 @@ void	redir_op(t_command *command, char **env)
 	while (command->files)
 	{
 		if (command->files->red_type == INPUT)
-			input_redir(command);
+			*global.exit_s = input_redir(command);
 		else if (command->files->red_type == OUTPUT)
-			output_redir(command);
+			*global.exit_s = output_redir(command);
 		else if (command->files->red_type == APPEND)
-			append_redir(command);
+			*global.exit_s = append_redir(command);
 		else if (command->files->red_type == HERDOC)
 			herdoc_redir(command, env);
+		// if (*global.exit_s > 0)
+		// 	return ;
 		command->files = command->files->next;
 	}
 }

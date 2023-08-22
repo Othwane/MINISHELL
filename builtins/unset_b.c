@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 23:13:37 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/21 00:53:39 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/22 00:13:31 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void    unsetenv_b(char *arg)
 		if (arg && check_nameof_var(arg))
 			display_error("minishell: export: `': not a valid identifier\n", arg, 96);
 		else
-		{			
+		{		
+			// unset_export(arg);
 			env_name = ft_strlcpy("", global.env[i], get_pos(global.env[i]));
 			if (is_exist_var(arg, env_name) == 0)
 				newenv[j++] = ft_strdup(global.env[i]);

@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/21 20:47:36 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/22 00:14:29 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ void					free_command(t_command *command);
 void					free_resources(t_tokens *token);
 void					get_envirement(t_command *token, char **env);
 char					*remove_dollarsign(char *arg);
-char					*remove_special_char(char *str);
 int						check_quote(char *var);
 int						next_isvalid(char c);
 int						get_next_var(char *var);
@@ -138,6 +137,7 @@ void					free_env();
 char					**fill_env(char **env);
 void					env_b(char **export);
 void					export_b(t_command *cmd);
+void					add_to_env(char *var);
 char					**add_newenv(char **env, char *new);
 void					unsetenv_b(char *args);
 int						check_nameof_var(char *var_name);

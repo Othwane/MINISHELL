@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/21 20:49:47 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/22 02:08:09 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	parsing(t_tokens *token, t_command **cmd)
 	{
 		if ((is_redirections(token->content) == 0) && (ft_strcmp(token->content, "|") != 0))
 		{
-			// command->cmd_num++;
 			command->command = ft_strdup(token->content);
 			token = token->next;
 		}
@@ -70,7 +69,6 @@ void	parsing(t_tokens *token, t_command **cmd)
 		command->next->infile = 0;
 		command->next->outfile = 1;
 		command->next->cmd_path = NULL;
-		// command->next->cmd_num = command->cmd_num;
 		command->next->next = NULL;
 		parsing(token->next, &command->next);
 	}
@@ -133,7 +131,8 @@ int main(int ac, char **av, char **env)
 	(void)av;
 	global.env = fill_env(env);
 	global.export = fill_env(env);
-	global.exit_s = calloc(1, sizeof(int));
+	global.exit_s = malloc(1 * sizeof(int));
+	*global.exit_s = 0;
 	global.fdin = dup(0);
 	global.fdout = dup(1);
 	while (1)

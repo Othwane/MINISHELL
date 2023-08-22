@@ -6,7 +6,7 @@
 #    By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/11 05:43:13 by aasselma          #+#    #+#              #
-#    Updated: 2023/08/21 20:41:06 by aasselma         ###   ########.fr        #
+#    Updated: 2023/08/22 02:04:20 by aasselma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC =	minishell.c signals.c print_errors.c ft_itoa.c ./parsing/errors.c \
 
 OBJ	= $(SRC:%.c=%.o)
 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-g -fsanitize=address
 
 LDFLAGS = "-L/goinfre/aasselma/homebrew/opt/readline/lib"
 

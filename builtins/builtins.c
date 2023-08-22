@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:22:03 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/21 15:52:01 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/22 03:10:12 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	exec_builtins(t_command *command)
 	if(ft_strcmp(command->arguments[0], "echo") == 0)
 		echo_b(command->arguments);
 	else if (ft_strcmp(command->arguments[0], "cd") == 0)
-		cd_b(command->arguments);
+		*global.exit_s = cd_b(command->arguments);
 	else if (ft_strcmp(command->arguments[0], "pwd") == 0)
 		pwd_b();
 	else if (ft_strcmp(command->arguments[0], "export") == 0)
@@ -42,7 +42,7 @@ void	exec_builtins(t_command *command)
 	else if (ft_strcmp(command->arguments[0], "unset") == 0)
 	{
 		while (command->arguments[i])
-			unsetenv_b(command->arguments[i++]);	
+			unsetenv_b(command->arguments[i++]);
 	}
 	else if (ft_strcmp(command->arguments[0], "env") == 0)
 		env_b(NULL);

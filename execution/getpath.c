@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 16:05:27 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/21 18:29:14 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/22 02:17:53 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ char	*checkcmd(char **envp, char **envsplited, char *cmd)
 
 	i = 0;
 	if (envp)
-	envsplited = getpath(envp);
-	while (envsplited[i])
+		envsplited = getpath(envp);
+	while (envsplited && envsplited[i])
 	{
 		command = joinslash_cmd(envsplited[i], cmd);
 		if (access(command, F_OK) == 0)

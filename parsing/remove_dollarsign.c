@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 16:53:56 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/21 18:26:35 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/22 03:56:11 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ char	*remove_incase(char *arg, char c)
 	newarg = malloc((ft_strlen(arg) + 1) * 1);
 	while(arg[i])
 	{
-		if ((arg[i + 1] == c) && v == 0)
+		if (arg[i + 1] == c || arg[i] == c)
 		{
 			v++;
-			if (arg[i] == '$')
+			if (arg[i] == '$' && v == 1)
 				i++;
 		}
 		if (v == 2)
@@ -46,7 +46,6 @@ char	*remove_dollarsign(char *arg)
 	char	*new;
 	
 	new = remove_incase(arg, 34);
-	new = remove_incase(ft_strdup(new), 39);
-	// exit(0);
+	new = remove_incase(new, 39);
 	return (new);
 }
