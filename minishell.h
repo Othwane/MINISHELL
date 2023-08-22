@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/22 00:14:29 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/22 07:30:50 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ typedef struct s_env_e
 // -------
 void					print_command(t_command *my_list);
 // -------
+void					intialize_command(t_command **command);
+void					init_global(char **env);
 void					display_error(char  *error, char *str, char c);
 char					*ft_itoa(int n);
 void					set_signal();
@@ -128,7 +130,7 @@ int						check_ifvalid(char c);
 int						special_strlen(char	*env);
 void					remove_quotes(t_command *token);
 void					_exec(t_command *command, char	**env);
-void					redir_op(t_command *command, char **env);
+int						redir_op(t_command *command, char **env);
 void					ft_herdoc(int fd, t_command *cmd, char **env);
 char					*findpath(char *cmd, char **envp);
 
@@ -148,7 +150,7 @@ int						env_len(char **env);
 int						echo_b(char **args);
 int						pwd_b(void);
 int 					cd_b(char** argv);
-int						exit_b();
+int						exit_b(t_command *command);
 void					exec_builtins(t_command *command);
 int						is_builtin(char *arg);
 #endif

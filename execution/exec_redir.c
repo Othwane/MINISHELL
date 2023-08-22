@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:40:49 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/22 04:12:01 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/22 06:36:44 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	herdoc_redir(t_command *command, char	**env)
 	close(fd[0]);
 }
 
-void	redir_op(t_command *command, char **env)
+int	redir_op(t_command *command, char **env)
 {
 	while (command->files)
 	{
@@ -79,8 +79,9 @@ void	redir_op(t_command *command, char **env)
 			*global.exit_s = append_redir(command);
 		else if (command->files->red_type == HERDOC)
 			herdoc_redir(command, env);
-		// if (*global.exit_s > 0)
-		// 	return ;
+		if (*global.exit_s > 0)
+			return (*global.exit_s);
 		command->files = command->files->next;
 	}
+	return (0);
 }

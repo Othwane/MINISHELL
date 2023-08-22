@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/22 02:08:09 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/22 06:15:51 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,7 @@ void	parsing(t_tokens *token, t_command **cmd)
 	if (token)
 	{
 		command->next = malloc(sizeof(t_command));
-		command->next->command = NULL;
-		command->next->arguments = NULL;
-		command->next->files = NULL;
-		command->next->args = NULL;
-		command->next->infile = 0;
-		command->next->outfile = 1;
-		command->next->cmd_path = NULL;
-		command->next->next = NULL;
+		intialize_command(&command->next);
 		parsing(token->next, &command->next);
 	}
 }
@@ -121,20 +114,13 @@ int	ft_inputlen(char *input)
 	return (len);
 }
 
-int main(int ac, char **av, char **env)
+int ft_system(char **env)
 {
 	t_tokens	*node_head;
 	t_command	*command;
 	char		*input;
 
-	(void)ac;
-	(void)av;
-	global.env = fill_env(env);
-	global.export = fill_env(env);
-	global.exit_s = malloc(1 * sizeof(int));
-	*global.exit_s = 0;
-	global.fdin = dup(0);
-	global.fdout = dup(1);
+	init_global(env);
 	while (1)
 	{
 		set_signal();
@@ -146,14 +132,7 @@ int main(int ac, char **av, char **env)
 		{
 			node_head = NULL;
 			command = malloc(sizeof(t_command));
-			command->next = NULL;
-			command->command = NULL;
-			command->arguments = NULL;
-			command->files = NULL;
-			command->args = NULL;
-			command->infile = 0;
-			command->outfile = 1;
-			command->cmd_path = NULL;
+			intialize_command(&command);
 			super_split(&node_head ,input);
 			if (check_syntax_error(node_head) == 1 || check_brakets(input) == 1)
 			{
@@ -175,4 +154,11 @@ int main(int ac, char **av, char **env)
 		free(input);
 	}
 	free_env();
+}
+
+int	main(int ac, char **av, char **env)
+{
+	(void)ac;
+	(void)av;
+	ft_system(env);
 }
