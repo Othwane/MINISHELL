@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 19:16:11 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/23 03:58:31 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 05:43:53 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	env_len(char **env)
 		i++;
 	return (i);
 }
+
 int	check_nameof_var(char *var_name)
 {
 	int	i;
@@ -78,6 +79,7 @@ int	check_ifexist(char *var)
 	}
 	return (0);
 }
+
 int	ft_var_checker(char *v_n, char *value, int index)
 {
 	char	*env_var;

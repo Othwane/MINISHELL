@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:40:49 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/23 01:31:15 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 05:39:43 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	output_redir(t_command *command)
 {
 	int	outfile_fd;
 
-	outfile_fd = open(command->files->filename, O_WRONLY | O_CREAT | O_TRUNC,
+	outfile_fd = open(command->files->filename, O_WRONLY | O_CREAT | O_TRUNC, \
 		0644);
 	if (outfile_fd < 0)
 	{
@@ -49,7 +49,7 @@ int	append_redir(t_command *command)
 {
 	int	outfile_fd;
 
-	outfile_fd = open(command->files->filename, O_WRONLY | O_CREAT | O_APPEND,
+	outfile_fd = open(command->files->filename, O_WRONLY | O_CREAT | O_APPEND, \
 		0644);
 	if (outfile_fd < 0)
 	{

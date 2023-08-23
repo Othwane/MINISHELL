@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_b.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 23:13:35 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/23 00:55:14 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 05:45:52 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	is_exist(char *var, int p)
 	free(value);
 	return (res);
 }
+
 void	add_to_env(char *var)
 {
 	int	i;

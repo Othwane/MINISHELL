@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_b.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 23:13:29 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/21 23:10:01 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 05:45:04 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	env_b(char **export)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (export == NULL)

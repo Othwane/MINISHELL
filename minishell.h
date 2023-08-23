@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/23 03:21:32 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 05:34:49 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,4 +148,10 @@ int 					cd_b(char** argv);
 void					exit_b(t_command *command, char x);
 void					exec_builtins(t_command *command);
 int						is_builtin(char *arg);
+void					remove_herdoc_file(t_files *file);
+void					prep_pipe(t_command *command);
+void					check_permis(t_command *command);
+void					inf_outf(t_command *command, int pipefd[2]);
+
+
 #endif

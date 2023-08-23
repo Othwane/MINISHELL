@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   herdoc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: omajdoub <omajdoub@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 12:04:37 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/20 16:57:23 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 05:42:49 by omajdoub         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	expand_herdoc(int fd, char *filename, char **env)
 
 void	ft_herdoc(int fd, t_command *cmd, char **env)
 {
-	t_files *file;
+	t_files	*file;
 
 	file = cmd->files;
 	if (file->quote == 0)
