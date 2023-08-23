@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:21:22 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/22 03:37:31 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/22 23:48:27 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,10 @@ int	ft_searchfor_var(char *s, t_env **env)
 				free(var);
 			}
 			else
+			{
 				index++;
+				free(var);
+			}
 			break ;
 		}
 		else
@@ -185,7 +188,10 @@ void	get_envirement(t_command *cmd, char **env)
 		{
 			len = ft_strlen(emt->value);
 			if (emt->value[0] == '?')
+			{
+				free(emt->value);
 				emt->value = ft_itoa(*global.exit_s);
+			}
 			else
 				emt->value = get_value(env, emt->value);
 			cmd->arguments[i] = s_and_r(cmd->arguments[i], emt->value, emt->s_p, len);

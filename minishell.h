@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/22 07:30:50 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/22 22:51:30 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,6 @@ typedef struct s_tokens
 	struct s_tokens		*next;
 }						t_tokens;
 
-typedef struct s_env_e
-{
-	char* key;
-	char* value;
-	struct s_env_e* next;
-} t_env_e;
 
 
 // -------
@@ -150,7 +144,7 @@ int						env_len(char **env);
 int						echo_b(char **args);
 int						pwd_b(void);
 int 					cd_b(char** argv);
-int						exit_b(t_command *command);
+void					exit_b(t_command *command, char x);
 void					exec_builtins(t_command *command);
 int						is_builtin(char *arg);
 #endif

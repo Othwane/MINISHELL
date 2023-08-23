@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:22:03 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/22 07:28:44 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/22 23:39:29 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,18 @@ void	exec_builtins(t_command *command)
 	else if (ft_strcmp(command->arguments[0], "unset") == 0)
 	{
 		while (command->arguments[i])
-			unsetenv_b(command->arguments[i++]);
+		{
+			if (command->arguments[i] && check_nameof_var(command->arguments[i]))
+			{
+				display_error("minishell: export: `': not a valid identifier\n", command->arguments[i], 96);
+				i++;
+			}
+			else
+				unsetenv_b(command->arguments[i++]);
+		}
 	}
 	else if (ft_strcmp(command->arguments[0], "env") == 0)
 		env_b(NULL);
 	else if (ft_strcmp(command->arguments[0], "exit") == 0)
-		exit_b(command);
+		exit_b(command, 1);
 }

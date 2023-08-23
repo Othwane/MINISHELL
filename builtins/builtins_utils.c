@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 19:16:11 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/21 19:18:14 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 01:09:11 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,22 @@ int	ft_var_checker(char *v_n, char *value, int index)
 		{
 			if (ft_strcmp(env_val, value) != 0)
 			{
-				global.export[index] = ft_strjoin(ft_strdup(env_var), value);
+				free(global.export[index]);
+				global.export[index]  = ft_strjoin(ft_strdup(env_var), value);
+				free(env_val);
+				free(env_var);
 				return (1);
 			}
 			else
+			{
+				free(env_val);
+				free(env_var);
 				return (0);
+			}
 		}
 		index++;
+		free(env_val);
+		free(env_var);
 	}
 	return (3);
 }

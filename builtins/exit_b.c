@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 23:13:32 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/22 07:32:01 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/22 08:02:09 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,19 @@ int	is_num(char *str)
 	return (1);
 }
 
-int exit_b(t_command *command)
+int	count_args(char **args)
 {
-	char x;
+	int	i;
 
-	if (!command->arguments[2])
+	i = 0;
+	while (args[i])
+		i++;
+	return (i);	
+}
+
+void	exit_b(t_command *command, char x)
+{
+	if (count_args(&command->arguments[1]) == 1 || count_args(&command->arguments[1]) == 0)
 	{
 		if (command->arguments[1])
 		{
@@ -53,6 +61,8 @@ int exit_b(t_command *command)
 		exit(x);
 	}
 	else
+	{
 		write(2, "minishell: exit: too many arguments\n", 36);
-	return (0);
+		*global.exit_s = x;	
+	}
 }

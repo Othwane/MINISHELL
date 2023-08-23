@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 23:13:35 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/21 23:10:01 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 00:55:14 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	ft_function(char *v_n, char *value, int index)
 	{
 		if (ft_strcmp(env_val, value) != 0)
 		{
+			free(global.env[index]);
 			global.env[index] = ft_strjoin(ft_strdup(env_var), value);
 			free(env_var);
 			free(env_val);
@@ -58,10 +59,15 @@ int	is_exist(char *var, int p)
 		if (ft_function(varname, value, i) == 3)
 			res = 3;
 		else
+		{
+			free(varname);
+			free(value);
 			return (1);
+		}
 		i++;
 	}
 	free(varname);
+	free(value);
 	return (res);
 }
 void	add_to_env(char *var)
@@ -100,6 +106,8 @@ void	add_to_export(char *newvar)
 		value = ft_strlcpy("", &newvar[p], ft_strlen(newvar) - (i));
 		if (ft_var_checker(varname, value, i) == 3)
 			global.export = add_newenv(global.export, newvar);
+		free(varname);
+		free(value);
 	}
 }
 
