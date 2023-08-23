@@ -12,7 +12,6 @@
 
 #include "../minishell.h"
 
-
 char	**getpath(char **envp)
 {
 	int		i;

@@ -29,7 +29,7 @@ int	ft_strlen(const char *s)
 char	*ft_substr(char const *s, int start, int len)
 {
 	char	*str2;
-	int	    i;
+	int		i;
 	char	*strmmry;
 
 	if (!s)
@@ -60,12 +60,12 @@ char	*ft_strdup(const char *s1)
 	if (s1 == NULL || ft_strlen(s1) == 0)
 		return (NULL);
 	s1_len = ft_strlen(s1);
-	dup = (char *) malloc(sizeof(char) * (s1_len + 1));
+	dup = (char *)malloc(sizeof(char) * (s1_len + 1));
 	if (!dup)
 		return (NULL);
 	while (s1[i])
 	{
-		dup[i] = (char) s1[i];
+		dup[i] = (char)s1[i];
 		i++;
 	}
 	dup[i] = '\0';

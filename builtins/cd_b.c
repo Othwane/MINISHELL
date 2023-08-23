@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-int cd_b(char** argv)
+int	cd_b(char **argv)
 {
 	char	*path;
 
@@ -28,14 +28,15 @@ int cd_b(char** argv)
 		chdir(path);
 		free(path);
 	}
-	else {
+	else
+	{
 		if (chdir(argv[1]) == -1)
 		{
 			write(2, "minishell: cd: ", 15);
 			write(2, argv[1], ft_strlen(argv[1]));
 			write(2, ": No such file or directory\n", 29);
-			return 1;
+			return (1);
 		}
 	}
-	return 0;
+	return (0);
 }

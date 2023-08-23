@@ -24,7 +24,7 @@ static char	*ft_array(char *x, unsigned int number, long int len)
 
 static long int	ft_len(int n)
 {
-	int					len;
+	int	len;
 
 	len = 0;
 	if (n <= 0)
@@ -39,10 +39,10 @@ static long int	ft_len(int n)
 
 char	*ft_itoa(int n)
 {
-	char				*x;
-	long int			len;
-	unsigned int		number;
-	int					sign;
+	char *x;
+	long int len;
+	unsigned int number;
+	int sign;
 
 	sign = 1;
 	len = ft_len(n);

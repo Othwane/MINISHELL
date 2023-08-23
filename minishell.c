@@ -6,11 +6,11 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/22 06:15:51 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 04:30:11 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include	"minishell.h"
+#include "minishell.h"
 
 t_files	*check_firts_token(t_tokens **token)
 {
@@ -39,16 +39,17 @@ void	parsing(t_tokens *token, t_command **cmd)
 	command->files = check_firts_token(&token);
 	if (token)
 	{
-		if ((is_redirections(token->content) == 0) && (ft_strcmp(token->content, "|") != 0))
+		if ((is_redirections(token->content) == 0) && (ft_strcmp(token->content,
+					"|") != 0))
 		{
 			command->command = ft_strdup(token->content);
 			token = token->next;
 		}
 	}
-	while(token)
+	while (token)
 	{
 		if (ft_strcmp(token->content, "|") == 0)
-			break;
+			break ;
 		else if (is_redirections(token->content))
 		{
 			add_files(&command->files, token->next->content, token->content);
@@ -76,15 +77,15 @@ void	convert_linkedlist(t_command *cmd, t_args *argument)
 	len = 0;
 	i = 0;
 	args = cmd->args;
-	while(args)
+	while (args)
 	{
 		len++;
 		args = args->next;
 	}
-	cmd->arguments = malloc((len + 2) * sizeof(char*));
+	cmd->arguments = malloc((len + 2) * sizeof(char *));
 	cmd->arguments[i++] = ft_strdup(cmd->command);
 	cmd->arguments[len + 1] = NULL;
-	while(argument)
+	while (argument)
 	{
 		cmd->arguments[i++] = ft_strdup(argument->args);
 		args = argument;
@@ -114,7 +115,7 @@ int	ft_inputlen(char *input)
 	return (len);
 }
 
-int ft_system(char **env)
+int	ft_system(char **env)
 {
 	t_tokens	*node_head;
 	t_command	*command;
@@ -133,7 +134,7 @@ int ft_system(char **env)
 			node_head = NULL;
 			command = malloc(sizeof(t_command));
 			intialize_command(&command);
-			super_split(&node_head ,input);
+			super_split(&node_head, input);
 			if (check_syntax_error(node_head) == 1 || check_brakets(input) == 1)
 			{
 				write(2, "minishell: syntax error\n", 25);

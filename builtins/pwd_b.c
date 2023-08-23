@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 23:13:12 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/21 15:52:56 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 04:05:35 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	pwd_b(void)
 {
-	int i;
+	int		i;
 	char	cwd[1024];
 
 	i = 0;
@@ -22,15 +22,15 @@ int	pwd_b(void)
 	{
 		while (cwd[i])
 		{
-			write(1,&cwd[i],1);
+			write(1, &cwd[i], 1);
 			i++;
 		}
-		write(1,"\n",1);
+		write(1, "\n", 1);
 		return (0);
 	}
 	else
 	{
-		perror("chdir: error retrieving current directory");
+		write(2, "chdir: error retrieving current directory\n", 42);
 		return (1);
 	}
 }

@@ -23,7 +23,7 @@ char	*remove_incase(char *arg, char c)
 	j = 0;
 	v = 0;
 	newarg = malloc((ft_strlen(arg) + 1) * 1);
-	while(arg[i])
+	while (arg[i])
 	{
 		if (arg[i + 1] == c || arg[i] == c)
 		{
@@ -43,8 +43,8 @@ char	*remove_incase(char *arg, char c)
 
 char	*remove_dollarsign(char *arg)
 {
-	char	*new;
-	
+	char *new;
+
 	new = remove_incase(arg, 34);
 	new = remove_incase(new, 39);
 	return (new);

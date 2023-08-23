@@ -15,15 +15,15 @@
 int	check_brakets(char *str)
 {
 	char	type;
-	int 	i;
+	int		i;
 	int		v;
 
 	v = 0;
 	i = 0;
 	type = 'x';
-	while(str[i])
+	while (str[i])
 	{
-		if(str[i] == 34 && type == 'x')
+		if (str[i] == 34 && type == 'x')
 			type = str[i];
 		else if (str[i] == 39 && type == 'x')
 			type = str[i];

@@ -6,16 +6,16 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 20:01:56 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/21 23:10:01 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 04:13:21 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	display_error(char  *error, char *str, char c)
+void	display_error(char *error, char *str, char c)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -24,6 +24,8 @@ void	display_error(char  *error, char *str, char c)
 		write(2, &error[i], 1);
 		if (error[i] == c && str != NULL)
 		{
+			if (c == ':')
+				write(2, &error[++i], 1);
 			while (str[j])
 				write(2, &str[j++], 1);
 		}

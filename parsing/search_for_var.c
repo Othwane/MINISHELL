@@ -19,15 +19,15 @@ int	ft_checker(int *quote, int *d_sign, int *q_num)
 		(*q_num) = 0;
 		(*quote) = 0;
 	}
-	if (((*d_sign) == '$' && (*q_num) == 2)
-		|| ((*d_sign) == '$' && (*q_num) == 0))
+	if (((*d_sign) == '$' && (*q_num) == 2) || ((*d_sign) == '$'
+			&& (*q_num) == 0))
 		return (1);
 	return (0);
 }
 
 int	next_isvalid(char c)
 {
-	if(c == '\0' || c == 34 || c == 39)
+	if (c == '\0' || c == 34 || c == 39)
 		return (0);
 	else if ((c == 32 || (c <= 9 && c >= 13)))
 		return (0);
@@ -36,8 +36,8 @@ int	next_isvalid(char c)
 
 int	check_quote(char *var)
 {
-	int		i;
-	int		q_num;
+	int	i;
+	int	q_num;
 	int	d_sign;
 	int	quote;
 
@@ -55,7 +55,7 @@ int	check_quote(char *var)
 			q_num++;
 		}
 		if (ft_checker(&quote, &d_sign, &q_num))
-			return (quote);	
+			return (quote);
 		i++;
 	}
 	return (-1);

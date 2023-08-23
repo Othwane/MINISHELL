@@ -20,11 +20,11 @@ void	nonexpandherdoc(int fd, char *filename)
 
 	i = 0;
 	signal(SIGINT, SIG_DFL);
-	while(1)
+	while (1)
 	{
 		input = readline(">");
 		if (!input || ft_strcmp(input, filename) == 0)
-			break;
+			break ;
 		newinput = ft_strjoin(input, "\n");
 		write(fd, newinput, ft_strlen(newinput));
 		free(newinput);
@@ -51,12 +51,12 @@ char	*expand_input(char *input, char **env)
 			free(emt);
 		}
 		if (res == -1)
-			break;
+			break ;
 	}
 	return (input);
 }
 
-void    expand_herdoc(int fd, char *filename, char **env)
+void	expand_herdoc(int fd, char *filename, char **env)
 {
 	char	*input;
 	char	*newinput;
@@ -64,11 +64,11 @@ void    expand_herdoc(int fd, char *filename, char **env)
 
 	i = 0;
 	signal(SIGINT, SIG_DFL);
-	while(1)
+	while (1)
 	{
 		input = readline(">");
 		if (!input || ft_strcmp(input, filename) == 0)
-			break;
+			break ;
 		input = expand_input(input, env);
 		newinput = ft_strjoin(input, "\n");
 		write(fd, newinput, ft_strlen(newinput));
@@ -78,7 +78,7 @@ void    expand_herdoc(int fd, char *filename, char **env)
 
 void	ft_herdoc(int fd, t_command *cmd, char **env)
 {
-	t_files	*file;
+	t_files *file;
 
 	file = cmd->files;
 	if (file->quote == 0)

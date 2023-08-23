@@ -45,8 +45,8 @@ int	is_exist(char *var, int p)
 {
 	char	*varname;
 	char	*value;
-	int	i;
-	int	res;
+	int		i;
+	int		res;
 
 	i = 0;
 	res = 0;
@@ -54,7 +54,7 @@ int	is_exist(char *var, int p)
 	value = ft_strlcpy("", &var[p], ft_strlen(var) - (i));
 	if (global.env[0] == NULL)
 		return (3);
-	while(global.env[i])
+	while (global.env[i])
 	{
 		if (ft_function(varname, value, i) == 3)
 			res = 3;
@@ -72,10 +72,10 @@ int	is_exist(char *var, int p)
 }
 void	add_to_env(char *var)
 {
-	int		i;
+	int	i;
 
 	i = 0;
-	while(var[i])
+	while (var[i])
 	{
 		if (var[i] == '=')
 		{
@@ -90,8 +90,8 @@ void	add_to_export(char *newvar)
 {
 	char	*varname;
 	char	*value;
-	int	i;
-	int	p;
+	int		i;
+	int		p;
 
 	i = 0;
 	p = get_pos(newvar);

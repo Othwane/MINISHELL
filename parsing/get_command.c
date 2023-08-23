@@ -25,7 +25,7 @@ void	add_args(t_args **args, char *content)
 	else
 	{
 		tmp = *args;
-		while(tmp->next)
+		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = newnode;
 	}
@@ -51,7 +51,7 @@ void	add_files(t_files **files, char *content, char *rdac)
 	if (*files == NULL)
 		*files = newnode;
 	else
-	{	
+	{
 		tmp = *files;
 		while (tmp->next)
 			tmp = tmp->next;
@@ -59,7 +59,7 @@ void	add_files(t_files **files, char *content, char *rdac)
 	}
 }
 
-void	add_var(t_env **env, char *content, int	s_p, int e_p)
+void	add_var(t_env **env, char *content, int s_p, int e_p)
 {
 	t_env	*newnode;
 

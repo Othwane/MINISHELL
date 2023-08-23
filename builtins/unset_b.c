@@ -15,8 +15,8 @@
 int	newlen(char *varname)
 {
 	char	*env_name;
-	int i;
-	int len;
+	int		i;
+	int		len;
 
 	i = 0;
 	len = env_len(global.env);
@@ -34,8 +34,8 @@ int	newlen(char *varname)
 int	new_exportlen(char *varname)
 {
 	char	*env_name;
-	int i;
-	int len;
+	int		i;
+	int		len;
 
 	i = 0;
 	len = env_len(global.export);
@@ -52,7 +52,7 @@ int	new_exportlen(char *varname)
 
 int	is_exist_var(char *varname, char *env_name)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (global.env[i])
@@ -73,7 +73,7 @@ void	unset_export(char *arg)
 
 	i = 0;
 	j = 0;
-	new_exp = malloc((new_exportlen(arg) + 1) * sizeof(char*));
+	new_exp = malloc((new_exportlen(arg) + 1) * sizeof(char *));
 	while (global.export[i])
 	{
 		env_name = ft_strlcpy("", global.export[i], get_pos(global.export[i]));
@@ -87,7 +87,7 @@ void	unset_export(char *arg)
 	global.export = new_exp;
 }
 
-void    unsetenv_b(char *arg)
+void	unsetenv_b(char *arg)
 {
 	char	**newenv;
 	char	*env_name;
@@ -96,9 +96,9 @@ void    unsetenv_b(char *arg)
 
 	i = 0;
 	j = 0;
-	newenv = malloc((newlen(arg) + 1) * sizeof(char*));
+	newenv = malloc((newlen(arg) + 1) * sizeof(char *));
 	while (global.env[i])
-	{	
+	{
 		unset_export(arg);
 		env_name = ft_strlcpy("", global.env[i], get_pos(global.env[i]));
 		if (is_exist_var(arg, env_name) == 0)

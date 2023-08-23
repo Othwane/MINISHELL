@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:14 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/22 22:51:30 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 03:21:32 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void					intialize_command(t_command **command);
 void					init_global(char **env);
 void					display_error(char  *error, char *str, char c);
 char					*ft_itoa(int n);
+int						ft_atoi(char *ptr);
 void					set_signal();
 int						check_brakets(char *str);
 void					super_split(t_tokens **my_list, char *str);

@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 17:21:22 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/22 23:48:27 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 04:41:58 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	is_valid(char c, int sign)
 		return (1);
 	if (c >= 97 && c <= 122)
 		return (1);
-	else if (sign == 0 && (c == '?'|| c == '$'))
+	else if (sign == 0 && (c == '?' || c == '$'))
 		return (1);
 	return (0);
 }
@@ -44,7 +44,7 @@ char	*copy_name(char *var, int sign)
 		var_name = malloc((ft_strlen(var) + 1) * sizeof(char));
 		while (is_valid(var[i], 1) == 1)
 			var_name[j++] = var[i++];
-		var_name[j] = '\0';	
+		var_name[j] = '\0';
 	}
 	return (var_name);
 }
@@ -62,13 +62,15 @@ char	*get_varname(char *var)
 	{
 		if (var[i] == '$' && next_isvalid(var[i + 1]))
 		{
-			if ((var[++i] == '?' || var[i] == '$') || (var[i] >= '0' && var[i] <= '9'))
+			if ((var[++i] == '?' || var[i] == '$') || (var[i] >= '0'
+					&& var[i] <= '9'))
 				varname = copy_name(&var[i], 1);
-			else if (!((var[i] >= 97 && var[i] <= 122) || (var[i] >= 65 && var[i] <= 90)))
+			else if (!((var[i] >= 97 && var[i] <= 122) || (var[i] >= 65
+						&& var[i] <= 90)))
 				varname = copy_name(&var[i], 1);
 			else
 				varname = copy_name(&var[i], 0);
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -84,14 +86,14 @@ void	get_var_pos(char *s, char *v, int *start_pos, int *end_pos)
 	j = 0;
 	if (v == NULL)
 		return ;
-	while(s[i++])
+	while (s[i++])
 	{
 		if (s[i] == v[j])
 		{
 			*start_pos = i;
 			while (v[j] != '\0')
 				if (v[j++] != s[i++])
-					break;
+					break ;
 			if (j == ft_strlen(v))
 			{
 				*end_pos = i;
@@ -148,7 +150,8 @@ char	*get_value(char **env, char *var)
 	int		len;
 
 	i = 0;
-	while(env[i])
+	var2 = NULL;
+	while (env[i])
 	{
 		len = special_strlen(env[i]);
 		var2 = ft_strlcpy(var2, env[i], (len - 1));
@@ -166,7 +169,7 @@ char	*get_value(char **env, char *var)
 		i++;
 	}
 	free(var);
-	return(var2);
+	return (var2);
 }
 
 void	get_envirement(t_command *cmd, char **env)
@@ -194,7 +197,8 @@ void	get_envirement(t_command *cmd, char **env)
 			}
 			else
 				emt->value = get_value(env, emt->value);
-			cmd->arguments[i] = s_and_r(cmd->arguments[i], emt->value, emt->s_p, len);
+			cmd->arguments[i] = s_and_r(cmd->arguments[i], emt->value, emt->s_p,
+				len);
 			free(emt->value);
 			free(emt);
 		}

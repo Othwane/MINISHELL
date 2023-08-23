@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 19:16:11 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/23 01:09:11 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 03:58:31 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	get_pos(char *var)
 {
 	int	i;
-	
+
 	i = 0;
 	while (var[i])
 	{
@@ -29,7 +29,7 @@ int	get_pos(char *var)
 int	env_len(char **env)
 {
 	int	i;
-	
+
 	i = 0;
 	while (env[i])
 		i++;
@@ -43,12 +43,12 @@ int	check_nameof_var(char *var_name)
 	while (var_name[i])
 	{
 		if (i == 0 && ((var_name[i] >= '0' && var_name[i] <= '9')
-			|| var_name[i] == '='))
+				|| var_name[i] == '='))
 			return (1);
-		if (!(var_name[i] >= '0' && var_name[i] <= '9')
-				&& !(var_name[i] >= 65 && var_name[i] <= 90)
-				&& !(var_name[i] >= 97 && var_name[i] <= 122)
-				&& !((var_name[i] == '_') || (var_name[i] == '=')))
+		if (!(var_name[i] >= '0' && var_name[i] <= '9') && !(var_name[i] >= 65
+				&& var_name[i] <= 90) && !(var_name[i] >= 97
+				&& var_name[i] <= 122) && !((var_name[i] == '_')
+				|| (var_name[i] == '=')))
 			return (1);
 		if (var_name[i] == '=')
 			break ;
@@ -59,13 +59,21 @@ int	check_nameof_var(char *var_name)
 
 int	check_ifexist(char *var)
 {
-	int	i;
-	
+	char	*env_var;
+	int		i;
+	int		p;
+
 	i = 0;
 	while (global.export[i])
 	{
-		if (!ft_strcmp(global.export[i], var))
+		p = get_pos(global.export[i]);
+		env_var = ft_strlcpy("", global.export[i], p);
+		if (!ft_strcmp(env_var, var))
+		{
+			free(env_var);
 			return (1);
+		}
+		free(env_var);
 		i++;
 	}
 	return (0);
@@ -77,7 +85,7 @@ int	ft_var_checker(char *v_n, char *value, int index)
 	int		len;
 	int		p;
 
-	while(global.export[index])
+	while (global.export[index])
 	{
 		p = get_pos(global.export[index]);
 		len = ft_strlen(global.export[index]) - (p);
@@ -88,7 +96,7 @@ int	ft_var_checker(char *v_n, char *value, int index)
 			if (ft_strcmp(env_val, value) != 0)
 			{
 				free(global.export[index]);
-				global.export[index]  = ft_strjoin(ft_strdup(env_var), value);
+				global.export[index] = ft_strjoin(ft_strdup(env_var), value);
 				free(env_val);
 				free(env_var);
 				return (1);

@@ -42,7 +42,7 @@ char	*get_variable(char *env, int end)
 
 	i = 0;
 	var = malloc((end + 1) * sizeof(char));
-	while(i != end)
+	while (i != end)
 	{
 		var[i] = env[i];
 		i++;
@@ -56,7 +56,7 @@ int	in_qoute(char *token)
 	int	i;
 
 	i = 0;
-	while(token[i])
+	while (token[i])
 	{
 		if (token[i] == 34 || token[i] == 39)
 			return (1);
@@ -65,12 +65,12 @@ int	in_qoute(char *token)
 	return (0);
 }
 
-int	special_strlen(char	*env)
+int	special_strlen(char *env)
 {
 	int	i;
 
 	i = 0;
-	while(env[i] != '=')
+	while (env[i] != '=')
 		i++;
 	return (++i);
 }

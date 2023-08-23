@@ -21,7 +21,7 @@ int	check_pipes(t_tokens *token)
 		if (ft_strcmp(token->content, "|") == 0)
 		{
 			if (ft_strcmp(token->content, token->next->content) == 0)
-				return (1);	
+				return (1);
 		}
 		token = token->next;
 	}
@@ -34,8 +34,9 @@ int	check_redirections(t_tokens *token)
 {
 	while (token->next)
 	{
-		if (ft_strcmp(token->content, ">") == 0 || ft_strcmp(token->content, ">>") == 0
-			|| ft_strcmp(token->content, "<") == 0 || ft_strcmp(token->content, "<<") == 0)
+		if (ft_strcmp(token->content, ">") == 0 || ft_strcmp(token->content,
+				">>") == 0 || ft_strcmp(token->content, "<") == 0
+			|| ft_strcmp(token->content, "<<") == 0)
 		{
 			if (ft_strcmp(token->content, token->next->content) == 0)
 				return (1);
@@ -50,22 +51,22 @@ int	check_redirections(t_tokens *token)
 		}
 		token = token->next;
 	}
-	if (token->next == NULL && (ft_strcmp(token->content, ">") == 0 
-		|| ft_strcmp(token->content, ">>") == 0 || ft_strcmp(token->content, "<") == 0
-			|| ft_strcmp(token->content, "<<") == 0))
+	if (token->next == NULL && (ft_strcmp(token->content, ">") == 0
+			|| ft_strcmp(token->content, ">>") == 0 || ft_strcmp(token->content,
+				"<") == 0 || ft_strcmp(token->content, "<<") == 0))
 		return (1);
 	return (0);
 }
 
-int	check_syntax_error(t_tokens  *token)
+int	check_syntax_error(t_tokens *token)
 {
-	if (token->next == NULL && (ft_strcmp(token->content, ">") == 0 
-		|| ft_strcmp(token->content, ">>") == 0 || ft_strcmp(token->content, "<") == 0
-			|| ft_strcmp(token->content, "<<") == 0))
+	if (token->next == NULL && (ft_strcmp(token->content, ">") == 0
+			|| ft_strcmp(token->content, ">>") == 0 || ft_strcmp(token->content,
+				"<") == 0 || ft_strcmp(token->content, "<<") == 0))
 		return (1);
-	else if (token->next != NULL && (ft_strcmp(token->content, ">") == 0 
-		|| ft_strcmp(token->content, ">>") == 0 || ft_strcmp(token->content, "<") == 0
-			|| ft_strcmp(token->content, "<<") == 0))
+	else if (token->next != NULL && (ft_strcmp(token->content, ">") == 0
+			|| ft_strcmp(token->content, ">>") == 0 || ft_strcmp(token->content,
+				"<") == 0 || ft_strcmp(token->content, "<<") == 0))
 	{
 		if (token->next != NULL && (ft_strcmp(token->next->content, "|") == 0))
 			return (1);

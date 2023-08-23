@@ -34,18 +34,18 @@ void	add_new(t_tokens **t_list, char *content)
 
 void	super_split(t_tokens **my_list, char *str)
 {
-	char *token;
-	int i;
-	int w;
-	int s_len;
-	int	len;
+	char	*token;
+	int		i;
+	int		w;
+	int		s_len;
+	int		len;
 
 	i = 0;
 	w = 0;
 	len = ft_strlen(str);
-	while(i <= len)
+	while (i <= len)
 	{
-		if(str[i] >= 33 && str[i] <= 127)
+		if (str[i] >= 33 && str[i] <= 127)
 		{
 			s_len = string_count(str + i);
 			token = ft_substr(str, i, s_len);

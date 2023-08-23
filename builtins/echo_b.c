@@ -12,41 +12,45 @@
 
 #include "../minishell.h"
 
-int func(char* argument)
+int	func(char *argument)
 {
-    int i = 1;
-    if (argument[0] != 45)
-        return(0);
-    if (argument[i])
-    {
-        while (argument[i] == 'n')
-            i++;
-        if(argument[i] == '\0')
-            return(1);
-        if (argument[i] != '\0')
-            return(0);
-    }
-    return(0);
+	int	i;
+
+	i = 1;
+	if (argument[0] != 45)
+		return (0);
+	if (argument[i])
+	{
+		while (argument[i] == 'n')
+			i++;
+		if (argument[i] == '\0')
+			return (1);
+		if (argument[i] != '\0')
+			return (0);
+	}
+	return (0);
 }
 
-int        echo_b(char** args)
+int	echo_b(char **args)
 {
-    int i = 1;
-    int nl = 1;
+	int	i;
+	int	nl;
 
-    if (args[i] && (!ft_strcmp(args[i], "-n" ) || func(args[i])))
-    {
-        nl = 0;
-        i++;
-    }
-    while (args[i])
-    {
-        printf("%s", args[i]);
-        if (args[i + 1])
-            printf(" ");
-        i++;
-    }
-    if (nl)
-        printf("\n");
-    return (0);
+	i = 1;
+	nl = 1;
+	if (args[i] && (!ft_strcmp(args[i], "-n") || func(args[i])))
+	{
+		nl = 0;
+		i++;
+	}
+	while (args[i])
+	{
+		printf("%s", args[i]);
+		if (args[i + 1])
+			printf(" ");
+		i++;
+	}
+	if (nl)
+		printf("\n");
+	return (0);
 }

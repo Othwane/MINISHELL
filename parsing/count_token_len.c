@@ -14,7 +14,7 @@
 
 int	count__brkts(char *str, char c)
 {
-	int i;
+	int	i;
 	int	v;
 
 	v = 0;
@@ -23,8 +23,8 @@ int	count__brkts(char *str, char c)
 	{
 		if (str[i] == c)
 			v++;
-		if (v == 2 && ((str[i + 1] == ' ' || str[i + 1] == '\t')
-			|| (str[i + 1] == '>' ) || (str[i + 1] == '<') || (str[i + 1] == '|')))
+		if (v == 2 && ((str[i + 1] == ' ' || str[i + 1] == '\t') || (str[i
+					+ 1] == '>') || (str[i + 1] == '<') || (str[i + 1] == '|')))
 			return (++i);
 		i++;
 	}
@@ -33,13 +33,12 @@ int	count__brkts(char *str, char c)
 
 int	check_dependins(char *str)
 {
-	if ((str[0] == '>' && str[1] != '>' ) 
-		|| (str[0] == '<' && str[1] != '<'))
+	if ((str[0] == '>' && str[1] != '>') || (str[0] == '<' && str[1] != '<'))
 		return (1);
 	if ((str[0] == '>' && str[1] == '>'))
-			return (2);
+		return (2);
 	else if (str[0] == '<' && str[1] == '<')
-			return (2);
+		return (2);
 	else if (str[0] == '|')
 		return (1);
 	return (0);
@@ -54,27 +53,27 @@ int	ft_count_other_cases(char *str)
 	v = check_dependins(str);
 	if (v != 0)
 		return (v);
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == 34)
 			v++;
-		if ((((str[i + 1] == ' ' || str[i + 1] == '\t')
-			|| (str[i + 1] == '>')  || (str[i + 1] == '<') || (str[i + 1] == '|')) && v == 0))
+		if ((((str[i + 1] == ' ' || str[i + 1] == '\t') || (str[i + 1] == '>')
+					|| (str[i + 1] == '<') || (str[i + 1] == '|')) && v == 0))
 			return (++i);
-		else if (v == 2 && ((str[i + 1] == ' ' || str[i + 1] == '\t')
-			|| (str[i + 1] == '>' ) || (str[i] == '<') || (str[i + 1] == '|')))
-			return(++i);
+		else if (v == 2 && ((str[i + 1] == ' ' || str[i + 1] == '\t') || (str[i
+					+ 1] == '>') || (str[i] == '<') || (str[i + 1] == '|')))
+			return (++i);
 		i++;
 	}
 	return (i);
 }
 
-int string_count(char *str)
+int	string_count(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == 34)
 			return (count__brkts(str, 34));
