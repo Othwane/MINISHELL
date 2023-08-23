@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 23:13:15 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/22 02:02:59 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 06:49:25 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	cd_b(char **argv)
 
 	if (!argv[1] || !ft_strcmp(argv[1], "~"))
 	{
-		path = get_value(global.env, ft_strdup("HOME"));
+		path = get_value(g_global.env, ft_strdup("HOME"));
 		if (!path)
 		{
 			write(2, "minishell: cd: HOME not set\n", 29);

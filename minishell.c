@@ -6,67 +6,11 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:10:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/23 04:30:11 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 08:04:47 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_files	*check_firts_token(t_tokens **token)
-{
-	t_tokens	*node;
-	t_files		*file;
-
-	node = *token;
-	file = NULL;
-	if (is_redirections(node->content))
-	{
-		add_files(&file, node->next->content, node->content);
-		if (node->next->next)
-			*token = node->next->next;
-		else
-			*token = NULL;
-		return (file);
-	}
-	return (NULL);
-}
-
-void	parsing(t_tokens *token, t_command **cmd)
-{
-	t_command	*command;
-
-	command = *cmd;
-	command->files = check_firts_token(&token);
-	if (token)
-	{
-		if ((is_redirections(token->content) == 0) && (ft_strcmp(token->content,
-					"|") != 0))
-		{
-			command->command = ft_strdup(token->content);
-			token = token->next;
-		}
-	}
-	while (token)
-	{
-		if (ft_strcmp(token->content, "|") == 0)
-			break ;
-		else if (is_redirections(token->content))
-		{
-			add_files(&command->files, token->next->content, token->content);
-			token = token->next;
-		}
-		else if (is_redirections(token->content) == 0
-			|| ft_strcmp(token->content, "|") == 1)
-			add_args(&command->args, token->content);
-		token = token->next;
-	}
-	if (token)
-	{
-		command->next = malloc(sizeof(t_command));
-		intialize_command(&command->next);
-		parsing(token->next, &command->next);
-	}
-}
 
 void	convert_linkedlist(t_command *cmd, t_args *argument)
 {
@@ -115,10 +59,35 @@ int	ft_inputlen(char *input)
 	return (len);
 }
 
-int	ft_system(char **env)
+void	ft_ft(char *input)
 {
 	t_tokens	*node_head;
 	t_command	*command;
+
+	node_head = NULL;
+	command = malloc(sizeof(t_command));
+	intialize_command(&command);
+	super_split(&node_head, input);
+	if (check_syntax_error(node_head) == 1 || check_brakets(input) == 1)
+	{
+		write(2, "minishell: syntax error\n", 25);
+		*g_global.exit_s = 258;
+		free(command);
+	}
+	else
+	{
+		parsing(node_head, &command);
+		convert_linkedlist(command, command->args);
+		get_envirement(command, g_global.env);
+		remove_quotes(command);
+		_exec(command, g_global.env, 0);
+		free_command(command);
+	}
+	free_resources(node_head);
+}
+
+int	ft_system(char **env)
+{
 	char		*input;
 
 	init_global(env);
@@ -130,28 +99,7 @@ int	ft_system(char **env)
 		if (!input)
 			return (0);
 		else if (ft_inputlen(input) != 0)
-		{
-			node_head = NULL;
-			command = malloc(sizeof(t_command));
-			intialize_command(&command);
-			super_split(&node_head, input);
-			if (check_syntax_error(node_head) == 1 || check_brakets(input) == 1)
-			{
-				write(2, "minishell: syntax error\n", 25);
-				*global.exit_s = 258;
-				free(command);
-			}
-			else
-			{
-				parsing(node_head, &command);
-				convert_linkedlist(command, command->args);
-				get_envirement(command, global.env);
-				remove_quotes(command);
-				_exec(command, global.env);
-				free_command(command);
-			}
-			free_resources(node_head);
-		}
+			ft_ft(input);
 		free(input);
 	}
 	free_env();

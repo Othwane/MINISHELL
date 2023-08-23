@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   short_func.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/12 01:20:36 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/23 06:47:30 by aasselma         ###   ########.fr       */
+/*   Created: 2023/08/23 06:58:23 by aasselma          #+#    #+#             */
+/*   Updated: 2023/08/23 07:00:28 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void	signal_handler(int signum)
+int	get_pos(char *var)
 {
-	(void)signum;
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-	*g_global.exit_s = 1;
+	int	i;
+
+	i = 0;
+	while (var[i])
+	{
+		if (var[i] == '=')
+			return (i);
+		i++;
+	}
+	return (i);
 }
 
-void	set_signal(void)
+int	env_len(char **env)
 {
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, SIG_IGN);
+	int	i;
+
+	i = 0;
+	while (env[i])
+		i++;
+	return (i);
 }

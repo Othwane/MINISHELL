@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 20:01:56 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/23 04:13:21 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 06:47:47 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,5 @@ void	display_error(char *error, char *str, char c)
 		}
 		i++;
 	}
-	*global.exit_s = EXIT_FAILURE;
+	*g_global.exit_s = EXIT_FAILURE;
 }

@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 22:34:27 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/19 16:06:10 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 06:48:07 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,11 @@ void	free_env(void)
 	int	i;
 
 	i = 0;
-	while (global.env[i])
-		free(global.env[i++]);
-	free(global.env);
+	while (g_global.env[i])
+		free(g_global.env[i++]);
+	free(g_global.env);
 	i = 0;
-	while (global.export[i])
-		free(global.export[i++]);
-	free(global.export);
+	while (g_global.export[i])
+		free(g_global.export[i++]);
+	free(g_global.export);
 }

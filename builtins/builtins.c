@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:22:03 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/23 03:33:38 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 06:49:15 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ void	unset_b(char **ar)
 void	exec_builtins(t_command *command)
 {
 	if (ft_strcmp(command->arguments[0], "echo") == 0)
-		*global.exit_s = echo_b(command->arguments);
+		*g_global.exit_s = echo_b(command->arguments);
 	else if (ft_strcmp(command->arguments[0], "cd") == 0)
-		*global.exit_s = cd_b(command->arguments);
+		*g_global.exit_s = cd_b(command->arguments);
 	else if (ft_strcmp(command->arguments[0], "pwd") == 0)
-		*global.exit_s = pwd_b();
+		*g_global.exit_s = pwd_b();
 	else if (ft_strcmp(command->arguments[0], "export") == 0)
 		export_b(command);
 	else if (ft_strcmp(command->arguments[0], "unset") == 0)

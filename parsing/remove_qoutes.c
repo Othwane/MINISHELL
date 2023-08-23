@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reomve_qoutes.c                                    :+:      :+:    :+:   */
+/*   remove_qoutes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 01:44:04 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/21 17:41:31 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 08:10:27 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,13 @@ char	*remove_outer_quotes(char *str)
 
 void	remove_quotes(t_command *cmd)
 {
-	t_files *file;
-	int i;
+	t_files	*file;
+	int		i;
 
 	file = cmd->files;
 	while (cmd)
 	{
 		i = 0;
-		if (cmd->command)
-			cmd->command = remove_outer_quotes(cmd->command);
 		while (file)
 		{
 			file->filename = remove_outer_quotes(file->filename);

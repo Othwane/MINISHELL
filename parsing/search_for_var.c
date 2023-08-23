@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 08:22:57 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/21 13:49:56 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 05:44:38 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,32 @@ int	get_next_var(char *var)
 		i++;
 	}
 	return (-1);
+}
+
+void	get_var_pos(char *s, char *v, int *start_pos, int *end_pos)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	if (v == NULL)
+		return ;
+	while (s[i++])
+	{
+		if (s[i] == v[j])
+		{
+			*start_pos = i;
+			while (v[j] != '\0')
+				if (v[j++] != s[i++])
+					break ;
+			if (j == ft_strlen(v))
+			{
+				*end_pos = i;
+				break ;
+			}
+			else
+				j = 0;
+		}
+	}
 }

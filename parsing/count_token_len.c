@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:21:20 by aasselma          #+#    #+#             */
-/*   Updated: 2023/07/18 18:30:57 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 04:59:29 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ int	count__brkts(char *str, char c)
 	{
 		if (str[i] == c)
 			v++;
-		if (v == 2 && ((str[i + 1] == ' ' || str[i + 1] == '\t') || (str[i
-					+ 1] == '>') || (str[i + 1] == '<') || (str[i + 1] == '|')))
+		if (v == 2 && ((str[i + 1] == ' ' || str[i + 1] == '\t')
+				|| (str[i + 1] == '>') || (str[i + 1] == '<')
+				|| (str[i + 1] == '|')))
 			return (++i);
 		i++;
 	}
@@ -60,8 +61,9 @@ int	ft_count_other_cases(char *str)
 		if ((((str[i + 1] == ' ' || str[i + 1] == '\t') || (str[i + 1] == '>')
 					|| (str[i + 1] == '<') || (str[i + 1] == '|')) && v == 0))
 			return (++i);
-		else if (v == 2 && ((str[i + 1] == ' ' || str[i + 1] == '\t') || (str[i
-					+ 1] == '>') || (str[i] == '<') || (str[i + 1] == '|')))
+		else if (v == 2 && ((str[i + 1] == ' ' || str[i + 1] == '\t')
+				|| (str[i + 1] == '>') || (str[i] == '<')
+				|| (str[i + 1] == '|')))
 			return (++i);
 		i++;
 	}

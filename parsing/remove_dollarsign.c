@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 16:53:56 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/22 03:56:11 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 05:43:49 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*remove_incase(char *arg, char c)
 
 char	*remove_dollarsign(char *arg)
 {
-	char *new;
+	char	*new;
 
 	new = remove_incase(arg, 34);
 	new = remove_incase(new, 39);

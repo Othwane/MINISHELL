@@ -6,7 +6,7 @@
 /*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 20:38:51 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/21 20:39:26 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/08/23 06:34:01 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ static long int	ft_len(int n)
 
 char	*ft_itoa(int n)
 {
-	char *x;
-	long int len;
-	unsigned int number;
-	int sign;
+	char			*x;
+	long int		len;
+	unsigned int	number;
+	int				sign;
 
 	sign = 1;
 	len = ft_len(n);

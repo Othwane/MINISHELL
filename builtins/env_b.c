@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_b.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 23:13:29 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/23 05:45:04 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/08/23 06:50:24 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	env_b(char **export)
 	i = 0;
 	if (export == NULL)
 	{
-		while (global.env[i])
-			printf("%s\n", global.env[i++]);
+		while (g_global.env[i])
+			printf("%s\n", g_global.env[i++]);
 	}
 	else
 	{
-		while (global.export[i])
-			printf("declare -x %s\n", global.export[i++]);
+		while (g_global.export[i])
+			printf("declare -x %s\n", g_global.export[i++]);
 	}
-	*global.exit_s = EXIT_SUCCESS;
+	*g_global.exit_s = EXIT_SUCCESS;
 }

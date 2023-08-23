@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_file.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 05:30:00 by omajdoub          #+#    #+#             */
-/*   Updated: 2023/08/23 05:40:35 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/08/23 06:49:04 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ void	check_permis(t_command *command)
 	if (access(command->arguments[0], F_OK))
 	{
 		write(2, "minishell : No such file or directory\n", 39);
-		*global.exit_s = 127;
+		*g_global.exit_s = 127;
 	}
 	else if (access(command->arguments[0], X_OK))
 	{
 		write(2, "minishell : Permission denied\n", 30);
-		*global.exit_s = 126;
+		*g_global.exit_s = 126;
 	}
 }
 

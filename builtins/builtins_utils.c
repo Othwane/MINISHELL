@@ -3,38 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: omajdoub <omajdoub@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 19:16:11 by aasselma          #+#    #+#             */
-/*   Updated: 2023/08/23 05:43:53 by omajdoub         ###   ########.fr       */
+/*   Updated: 2023/08/23 07:12:46 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	get_pos(char *var)
-{
-	int	i;
-
-	i = 0;
-	while (var[i])
-	{
-		if (var[i] == '=')
-			return (i);
-		i++;
-	}
-	return (i);
-}
-
-int	env_len(char **env)
-{
-	int	i;
-
-	i = 0;
-	while (env[i])
-		i++;
-	return (i);
-}
 
 int	check_nameof_var(char *var_name)
 {
@@ -65,10 +41,10 @@ int	check_ifexist(char *var)
 	int		p;
 
 	i = 0;
-	while (global.export[i])
+	while (g_global.export[i])
 	{
-		p = get_pos(global.export[i]);
-		env_var = ft_strlcpy("", global.export[i], p);
+		p = get_pos(g_global.export[i]);
+		env_var = ft_strlcpy("", g_global.export[i], p);
 		if (!ft_strcmp(env_var, var))
 		{
 			free(env_var);
@@ -80,6 +56,24 @@ int	check_ifexist(char *var)
 	return (0);
 }
 
+int	ft_check_value(char *env_var, char *env_val, char *value, int index)
+{
+	if (ft_strcmp(env_val, value) != 0)
+	{
+		free(g_global.export[index]);
+		g_global.export[index] = ft_strjoin(ft_strdup(env_var), value);
+		free(env_val);
+		free(env_var);
+		return (1);
+	}
+	else
+	{
+		free(env_val);
+		free(env_var);
+		return (0);
+	}
+}
+
 int	ft_var_checker(char *v_n, char *value, int index)
 {
 	char	*env_var;
@@ -87,28 +81,18 @@ int	ft_var_checker(char *v_n, char *value, int index)
 	int		len;
 	int		p;
 
-	while (global.export[index])
+	while (g_global.export[index])
 	{
-		p = get_pos(global.export[index]);
-		len = ft_strlen(global.export[index]) - (p);
-		env_var = ft_strlcpy("", global.export[index], p);
-		env_val = ft_strlcpy("", &global.export[index][p], len);
+		p = get_pos(g_global.export[index]);
+		len = ft_strlen(g_global.export[index]) - (p);
+		env_var = ft_strlcpy("", g_global.export[index], p);
+		env_val = ft_strlcpy("", &g_global.export[index][p], len);
 		if (ft_strcmp(env_var, v_n) == 0)
 		{
-			if (ft_strcmp(env_val, value) != 0)
-			{
-				free(global.export[index]);
-				global.export[index] = ft_strjoin(ft_strdup(env_var), value);
-				free(env_val);
-				free(env_var);
+			if (ft_check_value(env_var, env_val, value, index) == 1)
 				return (1);
-			}
 			else
-			{
-				free(env_val);
-				free(env_var);
 				return (0);
-			}
 		}
 		index++;
 		free(env_val);
